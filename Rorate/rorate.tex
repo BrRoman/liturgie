@@ -1,0 +1,96 @@
+\documentclass[twoside]{article}
+
+% Géométrie de la page :
+\usepackage{geometry}
+\geometry{paperwidth=14.85cm, paperheight=21cm, inner=1.8cm, outer=1.8cm, tmargin=1.5cm, bmargin=1.5cm}
+
+% Polices :
+% Choix d'une police principale :
+\usepackage{luatextra}
+\setmainfont{Arno Pro}
+
+% Pour autoriser toutes les tailles de polices :
+% Redéfinition de la taille des polices :
+\renewcommand{\small}{\fontsize{11}{11}\selectfont}
+
+% Césures etc. :
+\usepackage[latin, frenchb]{babel}
+\selectlanguage{frenchb}
+
+% Pour augmenter l'approche des caractères :
+\usepackage{soul}
+
+% Gregorio :
+\usepackage[autocompile]{gregoriotex}
+\grechangestyle{modeline}{\small\scshape}
+\gresetgregoriofontscaled{greciliae}{95000}
+\grechangestyle{initial}{\fontsize{36}{50}\color{rougeliturgique}\PlantinStd }
+\grechangestaffsize{16}
+\grechangedim{afterinitialshift}{2.2mm}{fixed}
+\grechangedim{beforeinitialshift}{0mm}{fixed}
+\gresetbarspacing{new}
+\grechangedim{bar@maior@standalone@notext}{0.3 cm}{scalable}
+\grechangedim{spacebeforeeolcustos}{0.3 cm}{scalable}
+
+% Pas d'entête ni de pied de page :
+\pagestyle{empty}
+
+% Polices et caractères spéciaux :
+\newfontfamily{\PlantinStd}{Plantin Std}
+\definecolor{rougeliturgique}{cmyk}{0.15,1,1,0}
+\def\accentaigucaractere{\makebox[0pt][c]{´}}
+\newcommand\accentaigu[1]{\setlength{\@tempdima}{\widthof{#1}}\hbox{#1\kern-0.5\@tempdima\accentaigucaractere\kern0.5\@tempdima}}
+\makeatother
+\catcode`\ã=\active% Tilde-a
+\defã{\accentaigu{æ}}
+\catcode`\õ=\active% Tilde-o
+\defõ{\accentaigu{œ}}
+\catcode`\Ï=\active% Alt-j
+\defÏ{\accentaigu{y}}
+\def\GreStar{
+{\color{rougeliturgique}\tiny\raisebox{1.5ex}{\ding{72}}}
+  \relax
+}
+% Espace fine :
+\DeclareRobustCommand{\mynobreakthinspace}{%
+\leavevmode\nobreak\hspace{0.08em}}
+\def~{\mynobreakthinspace{}}
+
+
+%%%%%%%%%%%%%%%%%
+% Symboles spéciaux :
+%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\fontsize{13}{13}\selectfont
+
+\gregorioscore[a]{rorate_0.gabc}
+\vspace{.2cm}
+\begin{center}
+\textbf{1}
+\end{center}
+\vspace{-.5cm}
+\gregorioscore[a]{rorate_1.gabc}
+\vspace{.2cm}
+\begin{center}
+\textbf{2}
+\end{center}
+\vspace{-.5cm}
+\gregorioscore[a]{rorate_2.gabc}
+\vspace{.2cm}
+\begin{center}
+\textbf{2b}
+\end{center}
+\vspace{-.5cm}
+\gregorioscore[a]{rorate_2b.gabc}
+\vspace{.2cm}
+\begin{center}
+\textbf{3}
+\end{center}
+\vspace{-.5cm}
+\gregorioscore[a]{rorate_3.gabc}
+%\gregorioscore[a]{rorate_0.gabc}
+
+\end{document}
+

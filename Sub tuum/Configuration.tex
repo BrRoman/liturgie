@@ -1,0 +1,88 @@
+\documentclass[12pt]{book}
+
+\usepackage{fontspec}
+\usepackage[autocompile]{gregoriotex}
+\usepackage{graphicx}
+\usepackage[french]{babel}
+\usepackage{calc}
+\usepackage{pifont}
+
+\frenchbsetup{ThinColonSpace=true}
+
+\setmainfont[ItalicFont = ArnoPro-Italic]{ArnoPro-Caption}
+
+\newfontfamily{\GregPlantin}[BoldFont = GregPlantin Bold,ItalicFont = GregPlantin Italic,BoldItalicFont = GregPlantin Bolditalic]{GregPlantin Regular}
+
+\newfontfamily{\PlantinStd}{Plantin Std}
+
+\newfontfamily{\GaramondPremierPro}[Numbers=OldStyle]{Garamond Premier Pro}
+\newfontfamily{\GaramondPremierProCaption}[Numbers=OldStyle]{GaramondPremrPro-Capt}
+\newfontfamily{\GaramondPremierProMediumCaption}[Numbers=OldStyle]{GaramondPremrPro-MedCapt}
+\newfontfamily{\GaramondPremierProItCaption}[Numbers=OldStyle]{GaramondPremrPro-ItCapt}
+\newfontfamily{\GaramondPremierProIt}{GaramondPremrPro-It}
+\newfontfamily{\GaramondPremierProMediumIt}{GaramondPremrPro-MedIt}
+
+\newfontfamily{\FlavGaramond}{FlavGaramond}
+
+\definecolor{rougeliturgique}{cmyk}{0.15,1,1,0}
+\renewcommand{\Rbar}{\textbf{\color{rougeliturgique}\GregPlantin\symbol{164}}}
+\renewcommand{\Vbar}{\textbf{\color{rougeliturgique}\GregPlantin\symbol{8730}}}
+
+\renewcommand{\GreDagger}{\textrm{\color{rougeliturgique}\FlavGaramond \symbol{8224}}}
+
+\catcode`\®=\active
+\def®{\Rbar}
+
+\catcode`\√=\active
+\def√{\Vbar}
+
+\catcode`\©=\active
+\def©{\hspace{-1.2ex}}
+
+\catcode`\ŧ=\active
+\defŧ{\GreDagger}
+
+\makeatletter
+\def\accentaigucaractere{\makebox[0pt][c]{´}}
+\newcommand\accentaigu[1]{\setlength{\@tempdima}{\widthof{#1}}\hbox{#1\kern-0.5\@tempdima\accentaigucaractere\kern0.5\@tempdima}}
+\makeatother
+
+\def\espacefine{\hspace{0.035cm}}
+
+\catcode`\à=\active
+\defà{\accentaigu{æ}}
+
+\catcode`\ò=\active
+\defò{\accentaigu{œ}}
+
+\catcode`\ù=\active
+\defù{\accentaigu{y}}
+
+\catcode`\™=\active
+\def™{\textit{\color{rougeliturgique}T.P.}}
+
+\def\GreStar{
+{\color{rougeliturgique}\tiny\raisebox{1.5ex}{\ding{72}}}
+  \relax
+}
+
+\grechangestyle{initial}{\fontsize{36}{50}\color{rougeliturgique}\PlantinStd }
+
+\hoffset-1in
+\voffset-1in
+\newbox\scorebox
+
+\gresetheadercapture{commentary}{grecommentary}{string}
+\grechangestyle{commentary}{\color{rougeliturgique}\scriptsize\itshape}
+
+\grechangestaffsize{16}
+
+\grechangedim{afterinitialshift}{2.2mm}{fixed}
+\grechangedim{beforeinitialshift}{3mm}{fixed}
+
+\let\grevanillacommentary\grecommentary
+\def\grecommentary#1{\grevanillacommentary{#1\kern 0.3mm}}
+
+\gresetbarspacing{new}
+\grechangedim{bar@maior@standalone@notext}{0.3 cm}{scalable}
+\grechangedim{spacebeforeeolcustos}{0.3 cm}{scalable}

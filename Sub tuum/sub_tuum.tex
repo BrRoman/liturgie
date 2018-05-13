@@ -1,0 +1,18 @@
+\input{./Configuration.tex}
+
+\grechangedim{commentaryraise}{.3cm}{scalable}
+
+\begin{document}
+
+\setbox\scorebox=\vbox{\hsize=8cm\relax % change the width of the score here
+  \fontsize{11.5}{12}\selectfont
+
+%% sub_tuum.gabc
+
+\greannotation{\footnotesize\GaramondPremierProCaption\textsc{vii}}
+\gregorioscore[a]{sub_tuum.tex}
+
+
+}\pagewidth\wd\scorebox\pageheight\dimexpr\ht\scorebox+\dp\scorebox\relax\shipout\box\scorebox
+
+\end{document}

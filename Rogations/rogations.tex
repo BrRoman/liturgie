@@ -1,0 +1,782 @@
+\documentclass{report}
+
+% Géométrie de la page :
+\usepackage{geometry}
+\geometry{paperwidth=14.85cm, paperheight=21cm, inner=1.3cm, outer=1.6cm, tmargin=1.2cm, bmargin=1cm, includefoot}
+
+% Modification temporaire des marges :
+\usepackage{scrextend}
+
+% Choix d'une police principale :
+\usepackage{luatextra}
+\setmainfont[Ligatures=Rare]{Arno Pro}
+
+% Langues latin et français (Césures, accents etc.) :
+\usepackage[latin, french]{babel}
+\selectlanguage{french}
+\frenchbsetup{ThinColonSpace=true}
+
+% Accès aux polices Opentype :
+\usepackage{fontspec}
+
+% Définition de polices :
+\newfontfamily{\GregPlantin}{GregPlantin}
+\newfontfamily{\Titre}[Style=Alternate]{Brioso Pro SemiboldDisp}
+\newfontfamily{\FlavGaramond}{FlavGaramond}
+\newfontfamily{\DropCapFont}{Plantin Std}
+
+% Pour pouvoir insérer des expressions (et non pas seulement des valeurs) dans des commandes telles que \setlength, \addtolength, etc. :
+\usepackage{calc}
+
+% Symboles :
+\usepackage{pifont}
+
+% Lettrines :
+\usepackage{lettrine}
+
+% Textes en parallèle :
+\usepackage{parallel}
+
+% Pour augmenter l'approche des caractères :
+\usepackage{soul}
+
+% Tableaux (litanies des saints) :
+\usepackage{longtable}
+\setlength{\tabcolsep}{0cm}
+
+% Alignement des cellules de tableaux :
+\usepackage{makecell}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% Gregorio %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[autocompile]{gregoriotex}
+\grechangedim{commentaryraise}{.4cm}{scalable}
+\grechangestyle{modeline}{\fontsize{11}{11}\selectfont\scshape}
+\grechangestyle{initial}{\fontsize{36}{36}\color{rougeliturgique}\DropCapFont}
+\grechangedim{afterinitialshift}{2.2mm}{fixed}
+\grechangedim{beforeinitialshift}{3mm}{fixed}
+\newbox\scorebox
+\gresetheadercapture{commentary}{grecommentary}{string}
+\let\grevanillacommentary\grecommentary
+\def\grecommentary#1{\grevanillacommentary{#1\kern 0.3mm}}
+\grechangestaffsize{16}% Taille des portées
+\gresetbarspacing{new}
+\grechangedim{bar@maior@standalone@notext}{0.3 cm}{scalable}
+\grechangedim{spacebeforeeolcustos}{0.3 cm}{scalable}
+
+% Couleur rouge :
+\definecolor{rougeliturgique}{cmyk}{0.15,1,1,0}
+
+% Style pour les références des partitions :
+\grechangestyle{commentary}{\color{rougeliturgique}\itshape\fontsize{9}{8}\selectfont}
+
+% Verset :
+\renewcommand{\Vbar}{\textbf{\color{rougeliturgique}\GregPlantin\symbol{8730}}}
+\catcode`\↑=\active % Alt-Maj-b
+\def↑{\Vbar}
+
+% Répons :
+\renewcommand{\Rbar}{\textbf{\color{rougeliturgique}\GregPlantin\symbol{164}}}
+\catcode`\®=\active % Alt-Maj-c
+\def®{\Rbar}
+
+% Croix haute :
+\renewcommand{\GreDagger}{\textrm{\color{rougeliturgique}\FlavGaramond \symbol{8224}}}
+\catcode`\Þ=\active % Alt-Maj-t
+\defÞ{\GreDagger}
+
+% Croix de Malte:
+\catcode`\±=\active % Alt-Maj-+
+\def±{{\fontspec{Menlo} \color{rougeliturgique}\symbol{10016}}}
+
+% Étoile dans les partitions :
+\def\GreStar{{\color{rougeliturgique}\tiny\raisebox{1.5ex}{\ding{72}}}\relax}
+
+% Étoile des Kyrie et Gloria étoilés :
+\catcode`\„=\active % Alt-Maj-s
+\def„{\raisebox{0.9ex}{\tiny{~\color{rougeliturgique}\ding{107}}}}
+
+% Antienne :
+\catcode`\¥=\active % Alt-Maj-g
+\def¥{{\fontspec{FlavGaramond} \symbol{8721}}}
+
+% Caractères composés (æ, œ, y) + accent aigu :
+\makeatletter
+\def\accentaigucaractere{\makebox[0pt][c]{´}}
+\newcommand\accentaigu[1]{\setlength{\@tempdima}{\widthof{#1}}\hbox{#1\kern-0.5\@tempdima\accentaigucaractere\kern0.5\@tempdima}}
+\makeatother
+\catcode`\Ð=\active% Alt-Maj-h
+\defÐ{\accentaigu{æ}}
+\catcode`\Ï=\active% Alt-Maj-k
+\defÏ{\accentaigu{œ}}
+\catcode`\Ÿ=\active% Alt-Maj-y
+\defŸ{\accentaigu{y}}
+
+% Divers symboles liturgiques :
+\catcode`\™=\active% Alt-Maj-8 % Temps pascal.
+\def™{\textit{\color{rougeliturgique}T.P.}}
+\catcode`\Ø=\active% Alt-Maj-$ % Psaume.
+\defØ{\textit{\color{rougeliturgique}Ps.}}
+\catcode`\→=\active% Alt-Maj-n % N. (in "Pontifici nostro N.").
+\def→{{\color{rougeliturgique}\itshape\small{N.}}}
+
+% Pour pouvoir aligner un texte sur les notes d'une partition (Fili Redémptor mundi etc.) :
+% (cf. site Gregorio/Tips and Tricks/Creating a Litany)
+\usepackage[savepos]{zref}
+\makeatletter 
+\newcounter{score}
+\newcounter{tabstop}[score]
+\newcommand{\grealign}{%
+	\@bsphack%
+	\ifgre@boxing\else%
+		\kern\gre@dimen@begindifference%
+		\stepcounter{tabstop}%
+		\expandafter\zsavepos{stop-\thescore-\thetabstop}%
+		\kern-\gre@dimen@begindifference%
+	\fi%
+	\@esphack%
+}
+\newcommand{\setstops}{%
+    \gdef\nstabbing@stops{%
+        \hspace*{-\oddsidemargin}\hspace{-1in}%
+        \hspace*{\zposx{stop-\thescore-1} sp}\=%
+    }%
+    \count@=\@ne
+    \loop\ifnum\count@<\value{tabstop}%
+    \begingroup\edef\x{\endgroup
+        \noexpand\g@addto@macro\noexpand\nstabbing@stops{%
+            \noexpand\hspace{-\noexpand\zposx{stop-\thescore-\the\count@} sp}%
+            \noexpand\hspace{\noexpand\zposx{stop-\thescore-\the\numexpr\count@+1} sp}\noexpand\=%
+        }%
+    }\x
+    \advance\count@\@ne
+    \repeat
+    \nstabbing@stops\kill
+}
+\makeatother
+\newenvironment{nstabbing}{
+    \setlength{\topsep}{0pt}%
+    \setlength{\partopsep}{0pt}%
+    \tabbing%
+    \setstops
+}
+{\endtabbing\stepcounter{score}}
+
+\gresetlastline{justified}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% Fin Gregorio %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commandes et environnements :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Espace fine :
+\DeclareRobustCommand{\mynobreakthinspace}{%
+\leavevmode\nobreak\hspace{0.08em}}
+\def~{\mynobreakthinspace{}}
+
+% Lettrines :
+\newcommand\DropCap[2]{\vspace{-\baselineskip}\lettrine[realheight, nindent=0.5em, slope=-.5em]{{\color{rougeliturgique}#1}}{#2}}
+
+% Environnement Boîte (espace avant, contenu) :
+\newenvironment{ParBox}[2]{
+    \setlength{\parindent}{0cm}
+    \begin{center}
+    \parbox[t]{14.85cm}{\vspace{#1} #2}
+    \end{center}
+    \par
+}
+
+% Style de paragraphe TitreA :
+\newenvironment{TitreA}[1]{
+    \setlength{\parindent}{0cm}
+    \setlength{\leftskip}{0cm}
+    \setlength{\rightskip}{0cm}
+    \setlength{\parskip}{-0.3cm}
+    \fontsize{32}{32}\selectfont
+    \begin{center}
+    \Titre\textsc{#1}
+    \end{center}
+}
+
+% Style de paragraphe TitreB :
+\newenvironment{TitreB}[1]{
+    \setlength{\parindent}{0cm}
+    \setlength{\leftskip}{0cm}
+    \setlength{\rightskip}{0cm}
+    \setlength{\parskip}{-0.3cm}
+    \fontsize{18}{18}\selectfont
+    \begin{center}
+    \textsc{#1}
+    \end{center}
+}
+
+% Style de paragraphe TitreC :
+\newenvironment{TitreC}[1]{
+    \setlength{\parindent}{0cm}
+    \setlength{\leftskip}{0cm}
+    \setlength{\rightskip}{0cm}
+    \setlength{\parskip}{0cm}
+    \fontsize{14}{14}\selectfont
+    \begin{center}
+    {\color{rougeliturgique}\textsc{#1}}
+    \end{center}
+}
+
+% Style de paragraphe Normal :
+\newenvironment{Normal}{
+    \setlength{\parindent}{0cm}
+    \setlength{\leftskip}{0cm}
+    \setlength{\rightskip}{0cm}
+    \setlength{\parskip}{0cm}
+    \selectlanguage{latin}
+    \fontsize{12}{12}\selectfont
+}
+
+% Style de paragraphe Rubrique :
+\newenvironment{Rubrique}[1]{
+    \setlength{\parindent}{0cm}
+    \setlength{\leftskip}{0cm}
+    \setlength{\rightskip}{0cm}
+    \setlength{\parskip}{0cm}
+    \selectlanguage{french}
+    \fontsize{12}{15}\selectfont
+    {\color{rougeliturgique}\textit{#1}}
+    \Normal{}
+}
+
+% Traduction :
+\newenvironment{Traduction}[1]{
+    \selectlanguage{french}
+    \fontsize{11}{11}\selectfont
+    \vspace{0.3cm}
+    \begin{addmargin}{1.5cm}
+    \input{scores/#1.tex}
+    \end{addmargin}
+    \vspace{0.3cm}
+    \Normal{}
+}
+
+% Partoche :
+\newenvironment{Partoche}[1]{
+    \fontsize{12}{12}\selectfont
+    \selectlanguage{latin}
+    \gregorioscore[a]{scores/#1}
+    \Traduction{#1}
+}
+
+% Latin/francais :
+\newenvironment{LF}[2]{
+    \begin{Parallel}[]{5cm}{5cm}
+    \selectlanguage{latin}
+    \ParallelLText{\fontsize{12}{13}\selectfont#1}
+    \selectlanguage{french}
+    \ParallelRText{\fontsize{11}{12}\selectfont#2}
+    \end{Parallel}
+    \Normal{}
+}
+
+% Ligne de séparation :
+\newcommand\Ligne{
+    \begin{center}
+    \thispagestyle{empty}
+    \greseparator{2}{10}
+    \end{center}
+}
+
+% Hyphenations :
+\hyphenation{al-le-lu-ia}
+\hyphenation{exau-cez}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\makebox{\vspace{1cm}}
+
+\begin{center}
+\fontsize{18}{18}\selectfont
+%\color{rougeliturgique}\grecross
+±
+\end{center}
+
+\vspace{3cm}
+
+\thispagestyle{empty}
+
+\TitreA{Procession des}
+\TitreA{Rogations}
+
+\vspace{3cm}
+
+\begin{center}
+    \setlength{\fboxsep}{0pt}\framebox{\includegraphics[width=8cm]{img/rogations.jpg}}
+\end{center}
+
+\thispagestyle{empty}
+
+\newpage
+\thispagestyle{empty}
+\makebox{}
+
+\newpage
+\parbox[b][2cm]{2cm}{}
+\TitreA{Procession des}
+\TitreA{Rogations}
+\parbox[b][2cm]{2cm}{}
+
+\Rubrique{Avant la procession, on chante debout l’antienne suivante :}
+
+\Partoche{exsurge}
+
+\Rubrique{Puis on se met à genoux pour les litanies.}
+
+\newpage
+
+\Rubrique{Deux chantres entonnent les litanies, auxquelles tous répondent sur le même ton :}
+
+\Partoche{kyrie}
+
+\gregorioscore[a]{scores/pater_de_caelis}
+\begin{nstabbing}
+    \hspace{1.2cm}Fili Redémptor mundi \>\textbf{De}-\>us, \>mi-\>se-\>\textit{ré}-\>\textit{re} \>no\>bis.\\
+    \hspace{1.2cm}Spíritus Sancte \>\textbf{De}-\>us, \>mi-\>se-\>\textit{ré}-\>\textit{re} \>no\>bis.\\
+    \hspace{1.2cm}Sancta Trínitas unus \>\textbf{De}-\>us, \>mi-\>se-\>\textit{ré}-\>\textit{re} \>no\>bis.\\
+\end{nstabbing}
+
+\Traduction{pater_de_caelis}
+
+\Normal{}
+
+\definecolor{gregoriocolor}{RGB}{255, 255, 255}
+
+\gregorioscore[a]{scores/sancta_maria}
+\begin{nstabbing}
+    \>o-\>rá-\>\textit{te} \>\textit{pro} \>no-\>bis.\\
+\end{nstabbing}
+
+\Traduction{sancta_maria}
+
+\Rubrique{Tous se lèvent, et la procession commence.}
+
+\begin{longtable}{p{0.7\textwidth}p{0.3\textwidth}}
+
+Sancta Dei Génitrix \textit{\normalsize{(Sainte Mère de Dieu)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancta Virgo Vírginum \textit{\normalsize{(Sainte Vierge des vierges)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Míchael \textit{\normalsize{(Saint Michel)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Gábriel \textit{\normalsize{(Saint Gabriel)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Ráphael \textit{\normalsize{(Saint Raphaël)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Omnes sancti Angeli et Archángeli \\ \textit{\normalsize{\hspace{1cm}(Tous les saints Anges et Archanges)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Omnes sancti beatórum Spirítuum órdines \\ \textit{\normalsize{\hspace{1cm}(Tous les Ordres des esprits bienheureux)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Sancte Ioánnes Baptísta \textit{\normalsize{(Saint Jean-Baptiste)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Ioseph \textit{\normalsize{(Saint Joseph)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Omnes sancti Patriárchæ et Prophétæ \\ \textit{\normalsize{\hspace{1cm}(Tous les saints Patriarches et Prophètes)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Sancte Petre \textit{\normalsize{(Saint Pierre)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Paule \textit{\normalsize{(Saint Paul)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Andréa \textit{\normalsize{(Saint André)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Iacóbe \textit{\normalsize{(Saint Jacques le Majeur)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Ioánnes \textit{\normalsize{(Saint Jean)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Thoma \textit{\normalsize{(Saint Thomas)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Iacóbe \textit{\normalsize{(Saint Jacques le Mineur)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Philíppe \textit{\normalsize{(Saint Philippe)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Bartholomǽe \textit{\normalsize{(Saint Barthélémy)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Matthǽe \textit{\normalsize{(Saint Matthieu)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Simon \textit{\normalsize{(Saint Simon)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Thaddǽe \textit{\normalsize{(Saint Thaddée)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Matthía \textit{\normalsize{(Saint Matthias)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Bárnaba \textit{\normalsize{(Saint Barnabé)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Luca \textit{\normalsize{(Saint Luc)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Marce \textit{\normalsize{(Saint Marc)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Omnes sancti Apóstoli et Evangelístæ \\ \textit{\normalsize{\hspace{1cm}(Tous les saints Apôtres et Évangélistes)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Omnes sancti Discípuli Dómini \\ \textit{\normalsize{\hspace{1cm}(Tous les saints disciples du Seigneur)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Omnes sancti Innocéntes \textit{\normalsize{(Tous les saints Innocents)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Sancte Stéphane \textit{\normalsize{(Saint Étienne)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Laurénti \textit{\normalsize{(Saint Laurent)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Vincénti \textit{\normalsize{(Saint Vincent)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancti Fabiáne et Sebastiáne \textit{\normalsize{(Saint Fabien et saint Sébastien)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Sancti Ioánnes et Paule \textit{\normalsize{(Saint Jean et saint Paul)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Sancti Cosma et Damiáne \textit{\normalsize{(Saint Côme et saint Damien)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Sancti Gervási et Protási \textit{\normalsize{(Saint Gervais et saint Protais)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Omnes sancti Mártyres \textit{\normalsize{(Tous les saints Martyrs)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Sancte Silvéster \textit{\normalsize{(Saint Sylvestre)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Gregóri \textit{\normalsize{(Saint Grégoire)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Ambrósi \textit{\normalsize{(Saint Ambroise)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Augustíne \textit{\normalsize{(Saint Augustin)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Hierónyme \textit{\normalsize{(Saint Jérôme)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Martíne \textit{\normalsize{(Saint Martin)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Nicoláe \textit{\normalsize{(Saint Nicolas)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Omnes sancti Pontífices et Confessóres \\ \textit{\normalsize{\hspace{1cm}(Tous les saints Pontifes et Confesseurs)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Omnes sancti Doctóres \textit{\normalsize{(Tous les saints Docteurs)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Sancte Antóni \textit{\normalsize{(Saint Antoine)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Pater Benedícte \textit{\normalsize{(Notre Père saint Benoît)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Bernárde \textit{\normalsize{(Saint Bernard)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Domínice \textit{\normalsize{(Saint Dominique)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancte Francísce \textit{\normalsize{(Saint François)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Omnes sancti Sacerdótes et Levítæ \\ \textit{\normalsize{\hspace{1cm}(Tous les saints Prêtres et Lévites)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Omnes sancti Monáchi et Eremítæ \\ \textit{\normalsize{\hspace{1cm}(Tous les saints Moines et Ermites)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Sancta María Magdaléna \textit{\normalsize{(Sainte Marie-Madeleine)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancta Agatha \textit{\normalsize{(Sainte Agathe)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancta Lúcia \textit{\normalsize{(Sainte Lucie)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancta Agnes \textit{\normalsize{(Sainte Agnès)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancta Cæcília \textit{\normalsize{(Sainte Cécile)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancta Catharína \textit{\normalsize{(Sainte Catherine)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Sancta Anastásia \textit{\normalsize{(Sainte Anastasie)}}, & \hfill o\textit{ra pro} nobis. \\
+
+Omnes sanctæ Vírgines et Víduæ \\ \textit{\normalsize{\hspace{1cm}(Toutes les saintes Vierges et Veuves)}}, & \hfill orá\textit{te pro} nobis. \\
+
+Omnes Sancti et Sanctæ Dei \\ \textit{\normalsize{\hspace{1cm}(Tous les Saints et Saintes de Dieu)}}, & \hfill \textbf{intercédi\textit{te pro} nobis.}\textit{\small{intercédez pour nous.}} \\
+
+\end{longtable}
+
+\gregorioscore[a]{scores/propitius_esto}
+\begin{nstabbing}
+    \hspace{1.6cm}Propí-\>\textit{ti-}\>\textit{us} \>es- \> \>to, \>ex- \>áu- \>di \>nos \>Dó- \>mi- \>ne.\\
+    \hspace{2cm}Ab \>\textit{o-}\>\textit{mni} \>ma- \> \>lo, \>lí- \>be- \>ra \>nos \>Dó- \>mi- \>ne.\\
+\end{nstabbing}
+
+\vspace{-0.5cm}
+
+\Traduction{propitius_esto}
+
+\Normal{}
+
+\begin{longtable}{p{0.7\textwidth}p{0.3\textwidth}}
+
+Ab o\textit{mni pe}ccáto \textit{\normalsize{(De tout péché)}}, & \hfill líbera nos Dómine. \\
+
+Ab \textit{ira} tua \textit{\normalsize{(De votre colère)}}, & \hfill líbera nos Dómine. \\
+
+A subitánea et impro\textit{vísa} morte \\ \textit{\normalsize{\hspace{1cm}(De la mort subite et imprévue)}}, & \hfill líbera nos Dómine. \\
+
+Ab insídi\textit{is di}áboli \textit{\normalsize{(Des pièges du diable)}}, & \hfill líbera nos Dómine. \\
+
+Ab ira, et ódio, et omni mala \textit{volun}táte \\ \textit{\normalsize{\hspace{1cm}(De la colère, de la haine et de toute mauvaise volonté)}}, & \hfill líbera nos Dómine. \\
+
+A spíritu forni\textit{cati}ónis \textit{\normalsize{(De l'esprit de fornication)}}, & \hfill líbera nos Dómine. \\
+
+A fúlgure et \textit{tempes}táte \textit{\normalsize{(Des éclairs et de la tempête)}}, & \hfill líbera nos Dómine. \\
+
+A flagéllo \textit{terræ}mótus \textit{\normalsize{(Du fléau des tremblements de terre)}}, & \hfill líbera nos Dómine. \\
+
+A peste, fa\textit{me et} bello \textit{\normalsize{(De la peste, de la famine et de la guerre)}}, & \hfill líbera nos Dómine. \\
+
+A mor\textit{te per}pétua \textit{\normalsize{(De la mort éternelle)}}, & \hfill líbera nos Dómine. \\
+
+Per mystérium sanctæ incarnati\textit{ónis} tuæ \\ \textit{\normalsize{\hspace{1cm}(Par le mystère de votre sainte Incarnation)}}, & \hfill líbera nos Dómine. \\
+
+Per ad\textit{véntum} tuum \textit{\normalsize{(Par votre venue)}}, & \hfill líbera nos Dómine. \\
+
+Per nativi\textit{tátem} tuam \textit{\normalsize{(Par votre Nativité)}}, & \hfill líbera nos Dómine. \\
+
+Per baptísmum et sanctum ieiú\textit{nium} tuum \\ \textit{\normalsize{\hspace{1cm}(Par votre baptême et votre saint jeûne)}}, & \hfill líbera nos Dómine. \\
+
+Per crucem et passi\textit{ónem} tuam \\ \textit{\normalsize{\hspace{1cm}(Par votre Croix et votre Passion)}}, & \hfill líbera nos Dómine. \\
+
+Per mortem et sepul\textit{túram} tuam \\ \textit{\normalsize{\hspace{1cm}(Par votre mort et votre sépulture)}}, & \hfill líbera nos Dómine. \\
+
+Per sanctam resurrecti\textit{ónem} tuam \\ \textit{\normalsize{\hspace{1cm}(Par votre sainte Résurrection)}}, & \hfill líbera nos Dómine. \\
+
+Per admirábilem ascensi\textit{ónem} tuam \\ \textit{\normalsize{\hspace{1cm}(Par votre admirable Ascension)}}, & \hfill líbera nos Dómine. \\
+
+Per advéntum Spíritus San\textit{cti Pa}rácliti \\ \textit{\normalsize{\hspace{1cm}(Par l'avènement du Saint-Esprit, le Paraclet)}}, & \hfill líbera nos Dómine. \\
+
+In di\textit{e iu}dícii \textit{\normalsize{(Au jour du Jugement)}}, & \hfill líbera nos Dómine. \\
+
+\end{longtable}
+
+\gresetlastline{ragged}
+
+\Partoche{peccatores}
+
+\begin{longtable}{p{0.7\textwidth}p{0.3\textwidth}}
+
+Ut no\textit{bis} parcas \textit{\normalsize{(Pour que vous nous pardonniez)}}, & te rogámus audi nos. \\
+& \\
+
+Ut nobis \textit{in}dúlgeas \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous vous montriez indulgent envers nous)}}, & te rogámus audi nos. \\
+& \\
+
+Ut ad veram pæniténtiam nos perdúcere \textit{di}gnéris \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous nous conduisiez à une vraie pénitence)}}, & te rogámus audi nos. \\
+& \\
+
+Ut Ecclésiam tuam sanctam ’ \\ régere et conserváre \textit{di}gnéris \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous gouverniez et conserviez votre sainte Église)}}, & te rogámus audi nos. \\
+& \\
+
+Ut Domnum Apostólicum et omnes ecclesiásticos órdines ’ in sancta religióne conserváre \textit{di}gnéris \\ \textit{\normalsize{\hspace{0.7cm}(Pour que gardiez dans la vraie religion}} \\ \textit{\normalsize{\hspace{0.7cm}la fonction apostolique et tous les ordres ecclésiastiques)}}, & te rogámus audi nos. \\
+& \\
+
+Ut inimícos sanctæ Ecclésiæ ’ humiliáre \textit{di}gnéris \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous daigniez humilier}} \\ \textit{\normalsize{\hspace{0.7cm}les ennemis de la Sainte Église)}}, & te rogámus audi nos. \\
+& \\
+
+Ut régibus et princípibus christiánis ’ \\ pacem et veram concórdiam donáre \textit{di}gnéris \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous daigniez donner la paix et la vraie concorde}} \\ \textit{\normalsize{\hspace{0.7cm}aux rois et aux princes chrétiens)}}, & rogámus audi nos. \\
+& \\
+
+Ut cuncto pópulo christiáno ’ \\ pacem et unitátem largíri \textit{di}gnéris \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous daigniez accorder la paix et l'unité}} \\ \textit{\normalsize{\hspace{0.7cm}à tout le peuple chrétien)}}, & te rogámus audi nos. \\
+& \\
+
+Ut omnes errántes ad unitátem Ecclésiæ revocáre, ’ \\ et infidéles univérsos ad Evangélii lumen perdúcere \textit{di}gnéris \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous daigniez rappeler dans l'unité de l'Église}} \\ \textit{\normalsize{\hspace{0.7cm}tous ceux qui errent, et conduire tous les infidèles}} \\ \textit{\normalsize{\hspace{0.7cm}à la lumière de l'Évangile)}}, & te rogámus audi nos. \\
+& \\
+
+Ut nosmetípsos in tuo sancto servítio ’ \\ confortáre et conserváre \textit{di}gnéris \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous daigniez nous conforter et nous conserver}} \\ \textit{\normalsize{\hspace{0.7cm}nous-mêmes dans votre saint service)}}, & te rogámus audi nos. \\
+& \\
+
+Ut mentes nostras ’ ad cæléstia desidéri\textit{a} érigas \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous daigniez élever nos esprits}} \\ \textit{\normalsize{\hspace{0.7cm}vers les désirs célestes)}}, & te rogámus audi nos. \\
+& \\
+
+Ut ómnibus benefactóribus nostris ’ \\ sempitérna bona \textit{re}tríbuas \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous daigniez rendre à tous nos bienfaiteurs}} \\ \textit{\normalsize{\hspace{0.7cm}les biens éternels)}}, & te rogámus audi nos. \\
+& \\
+
+Ut ánimas nostras, ’ \\ fratrum, propinquórum et benefactórum nostrórum ’ \\ ab ætérna damnatióne \textit{e}rípias \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous daigniez arracher à la damnation éternelle}} \\ \textit{\normalsize{\hspace{0.7cm}nos âmes et celles de nos frères,}} \\ \textit{\normalsize{\hspace{0.7cm} de nos proches et de nos bienfaiteurs)}}, & te rogámus audi nos. \\
+& \\
+
+Ut fructus terræ ’ dare et conserváre \textit{di}gnéris \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous daigniez donner et conserver}} \\ \textit{\normalsize{\hspace{0.7cm}les fruits de la terre)}}, & te rogámus audi nos. \\
+& \\
+
+Ut ómnibus fidélibus defúnctis ’ \\ réquiem ætérnam donáre \textit{di}gnéris \\ \textit{\normalsize{\hspace{0.7cm}(Pour que vous daigniez donner le repos éternel}} \\ \textit{\normalsize{\hspace{0.7cm}à tous les fidèles défunts)}}, & te rogámus audi nos. \\
+& \\
+
+Ut nos exaudíre \textit{di}gnéris \\ \textit{\normalsize{(Pour que vous daigniez nous exaucer),}} & te rogámus audi nos. \\
+ & \\
+
+Fi\textit{li} Dei \textit{\normalsize{(Ô Fils de Dieu),}} & te rogámus audi nos. \\
+
+\end{longtable}
+
+\Partoche{agnus_dei}
+
+\vspace{1cm}
+
+\Rubrique{Un chantre entonne ensuite le Psaume \oldstylenums{69}, que les deux chœurs chantent en alternance~:}
+
+\vspace{0.5cm}
+
+\centering{{\color{rougeliturgique}{\textsc{Psaume \oldstylenums{69}}}}}
+
+\Normal{}
+
+\Partoche{deus_in_adjutorium}
+
+\setlength{\tabcolsep}{0.2cm}
+\selectlanguage{latin}
+\renewcommand*{\arraystretch}{1.4}
+\begin{longtable}{>{\hspace{0.2cm}}p{0.45\textwidth}|>{\hspace{0.2cm}\normalsize}p{0.45\textwidth}}
+
+Confundántur et re\textit{vere}\textbf{án}tur, „ qui quærunt ánimam meam. & Qu'ils soient confondus et couverts de honte, ceux qui cherchent mon âme. \\
+
+Avertántur retrórsum, et \textit{eru}\textbf{bés}cant,  „ qui volunt mihi mala. & Que se tournent en arrière et qu'ils rougissent, ceux qui me veulent du mal. \\
+
+Avertántur statim e\textit{rube}\textbf{scén}tes,  „ qui dicunt mihi~: Euge, Euge. & Qu'ils se retournent en rougissant, ceux qui me disent~: «~Ah~! Ah~!~» \\
+
+Exsúltent et læténtur in te o\textit{mnes qui} \textbf{quæ}runt te~:  „ et dicant semper~: Magnificétur Dóminus~: qui díligunt salutáre tuum. & Qu'ils exultent et se réjouissent en vous, tous ceux qui vous cherchent~; et qu'ils disent sans cesse~: Gloire à Dieu, ceux qui aiment votre Salut. \\
+
+Ego vero egé\textit{nus et} \textbf{pau}per sum~:  „ Deus, ádiuva me. & Mais moi je suis pauvre et indigent~; ô Dieu aidez-moi~! \\
+
+Adiútor meus et liberátor \textit{meus} \textbf{es} tu~:  „ Dómine, ne moréris. & Vous êtes mon soutien et mon libérateur~; Seigneur ne tardez pas~! \\
+
+Glória Pa\textit{tri, et} \textbf{Fí}lio,  „ et Spirítui Sancto. & Gloire au Père, et au Fils, et au Saint-Esprit, \\
+
+Sicut erat in princípio, et \textit{nunc, et} \textbf{sem}per,  „ et in sǽcula sæculórum. Amen. & Comme il était au commencement, et maintenant et toujours, et pour les siècles des siècles. Amen. \\
+
+\end{longtable}
+
+\Rubrique{Un chantre (sur le ton simple)~:\hfill}
+
+\begin{longtable}{>{\hspace{0.2cm}}p{0.45\textwidth}|>{\hspace{0.2cm}\normalsize}p{0.45\textwidth}}
+
+↑ Salvos fac servos tuos. & ↑ Sauvez vos serviteurs. \\
+
+® Deus meus sperántes in te. & ® Qui espèrent en vous, Seigneur. \\
+
+↑ Esto nobis Dómine turris fortitúdinis. & ↑ Soyez pour nous, Seigneur, une tour fortifiée. \\
+
+® A fácie inimíci. & ® En face de notre ennemi. \\
+
+↑ Nihil profíciat inimícus in nobis. & ↑ Que l'ennemi n'ait aucune prise sur nous. \\
+
+® Et fílius iniquitátis non appónat nocére nobis. & ® Et que le fils de l'iniquité ne puisse plus nous nuire. \\
+
+↑ Dómine non secúndum peccáta nostra fácias nobis. & ↑ Seigneur, n'agissez pas envers nous selon nos péchés. \\
+
+® Neque secúndum iniquitátes nostras retríbuas nobis. & ® Et ne nous rétribuez pas selon nos iniquités. \\
+
+↑ Orémus pro Pontífice nostro →. & ↑ Prions pour notre Pape {\color{rougeliturgique}\itshape\small{N}}. \\
+
+® Dóminus consérvet eum, et vivíficet eum,  Þ et beátum fáciat eum in terra,  „ et non tradat eum in ánimam inimicórum eius. & ® Que le Seigneur le conserve, le vivifie et le rende heureux sur la terre, et qu'il ne le livre pas au pouvoir de ses ennemis. \\
+
+↑ Orémus pro benefactóribus nostris. & ↑ Prions pour nos bienfaiteurs. \\
+
+® Retribúere dignáre Dómine, Þ ómnibus nobis bona faciéntibus propter nomen tuum,  „ vitam ætérnam. Amen. & ® Daignez récompenser par la vie éternelle, Seigneur, tous ceux qui nous font du bien à cause de votre Nom. Ainsi soit-il. \\
+
+↑ Orémus pro fidélibus defúnctis. & ↑ Prions pour les fidèles défunts. \\
+
+® Réquiem ætérnam dona eis Dómine,  „ et lux perpétua lúceat eis. & ® Donnez-leur le repos éternel, Seigneur, et que la lumière perpétuelle brille pour eux. \\
+
+↑ Requiéscant in pace. & ↑ Qu'ils reposent en paix. \\
+
+® Amen. & ® Ainsi soit-il. \\
+
+↑ Pro frátribus nostris abséntibus. & ↑ Pour nos frères absents. \\
+
+® Salvos fac servos tuos,  „ Deus meus, sperántes in te. & ® Sauvez vos serviteurs, Seigneur, car ils espèrent en vous. \\
+
+↑ Mitte eis Dómine auxílium de sancto. & ↑ Envoyez-leur, Seigneur, le secours depuis votre sanctuaire. \\
+
+® Et de Sion tuére eos. & ® Et depuis Sion, protégez-les. \\
+
+↑ Dómine exáudi oratiónem meam. & ↑ Seigneur, exaucez ma prière. \\
+
+® Et clamor meus ad te véniat. & ® Et que mon cri parvienne jusqu'à vous. \\
+
+\end{longtable}
+
+\Rubrique{Le célébrant~:\hfill}
+
+\begin{longtable}{>{\hspace{0.2cm}}p{0.45\textwidth}|>{\hspace{0.2cm}\normalsize}p{0.45\textwidth}}
+
+↑ Dóminus vobíscum. & ↑ Le Seigneur soit avec vous. \\
+
+® Et cum spíritu tuo. & ® Et avec votre esprit. \\
+
+Orémus. & Prions. \\
+
+\selectlanguage{latin}\DropCap{D}{eus}, cui próprium est miseréri semper et párcere~: Þ súscipe deprecatiónem nostram~; „ ut nos, et omnes fámulos tuos, quos delictórum caténa constríngit, miserátio tuæ pietátis cleménter absólvat. & \selectlanguage{french} Ô Dieu dont le propre est d'avoir toujours pitié et de pardonner, accueillez notre prière, et que votre amour plein de pitié nous délivre, nous et tous vos serviteurs enchaînés par les liens du péché. \\
+
+\selectlanguage{latin}\DropCap{E}{xáudi}, quǽsumus Dómine, súpplicum preces~: Þ et confiténtium tibi parce peccátis~; „ ut páriter nobis indulgéntiam tríbuas benígnus et pacem. & \selectlanguage{french} Nous vous en supplions, Seigneur, prêtez l'oreille à nos humbles prières~: faites grâce aux pécheurs qui vous avouent leurs fautes et, dans votre bonté, accordez-nous à la fois le pardon et la paix. \\
+
+\selectlanguage{latin}\DropCap{I}{neffábilem} nobis Dómine misericórdiam tuam cleménter osténde~: Þ ut simul nos et a peccátis ómnibus éxuas~; „ et a pœnis, quas pro his merémur, erípias. & \selectlanguage{french} Daignez, Seigneur, nous montrer votre infinie miséricorde, afin qu'elle nous délivre de tous nos péchés, et en même temps nous fasse échapper aux châtiments qu'ils nous ont mérités. \\
+
+\selectlanguage{latin}\DropCap{D}{eus}, qui culpa offénderis, pæniténtia placáris~: Þ preces pópuli tui supplicántis propítius réspice~; „ et flagélla tuæ iracúndiæ quæ pro peccátis nostris merémur, avérte. & \selectlanguage{french} Ô Dieu, qui êtes offensé par le péché mais qui vous laissez apaiser par la pénitence, regardez avec bonté votre peuple en prière, et détournez de nous les châtiments de votre colère, que nous avons mérités à cause de nos péchés. \\
+
+\selectlanguage{latin}\DropCap{O}{mnípotens} sempitérne Deus, miserére fámulo tuo Pontífici nostro~→~: Þ et dírige eum secúndum tuam cleméntiam in viam salútis ætérnæ~; „ ut, te donánte, tibi plácita cúpiat, et tota virtúte perfíciat. & \selectlanguage{french} Dieu tout-puissant et éternel, ayez pitié de votre serviteur notre Pape N., et conduisez-le selon votre bonté sur la voie du salut éternel, afin que par votre grâce il désire ce qui vous plaît et l'accomplisse de toutes ses forces. \\
+
+\selectlanguage{latin}\DropCap{D}{eus}, a quo sancta desidéria, recta consília, et iusta sunt ópera~: Þ da servis tuis illam, quam mundus dare non potest, pacem~;~„ ut et corda nostra mandátis tuis dédita, et hóstium subláta formídine, témpora sint tua protectióne tranquílla. & \selectlanguage{french} Ô Dieu, de qui viennent les saints désirs, les droits conseils et les œuvres justes, accordez à vos serviteurs cette paix que le monde ne peut donner, afin que nos cœurs s'attachant à vos commandements, et toute crainte de l'ennemi étant repoussée, notre temps soit en paix sous votre protection. \\
+
+\selectlanguage{latin}\DropCap{U}{re} igne Sancti Spíritus renes nostros et cor nostrum Dómine~: Þ ut tibi casto córpore serviámus, „ et mundo corde placeámus. & \selectlanguage{french} Brûlez nos reins et nos cœurs du feu du Saint-Esprit, Seigneur, afin que nous vous servions avec un corps chaste, et que nous vous soyons agréables par la pureté de nos cœurs. \\
+
+\selectlanguage{latin}\DropCap{F}{idélium} Deus ómnium cónditor et redémptor, Þ animábus famulórum famularúmque tuárum remissiónem cunctórum tríbue peccatórum~: „ ut indulgéntiam, quam semper optavérunt, piis supplicatiónibus consequántur. & \selectlanguage{french} Ô Dieu, créateur et rédempteur de tous les fidèles, accordez aux âmes de vos serviteurs et de vos servantes la rémission de tous leurs péchés, afin qu'ils obtiennent par nos ferventes supplications le pardon qu'ils ont toujours désiré. \\
+
+\selectlanguage{latin}\DropCap{A}{ctiónes} nostras, quǽsumus Dómine, aspirándo prǽveni, et adiuvándo proséquere~: Þ ut cuncta nostra orátio et operátio a te semper incípiat, „ et per te cœpta finiátur. & \selectlanguage{french} Nous vous en prions, Seigneur~: que votre inspiration devance nos actions et que votre secours les accompagne, pour que toute notre prière et notre travail commencent toujours par vous, et que commencés par vous ils trouvent en vous leur achèvement. \\
+
+\selectlanguage{latin}\DropCap{O}{mnípotens} sempitérne Deus, qui vivórum domináris simul et mortuórum, omniúmque miseréris, quos tuos fide et ópere futúros esse prænóscis~: Þ te súpplices exorámus~; „ ut pro quibus effúndere preces decrévimus, quosque vel præsens sǽculum adhuc in carne rétinet, vel futúrum iam exútos córpore suscépit, intercedéntibus ómnibus Sanctis tuis, pietátis tuæ cleméntia, ómnium delictórum suórum véniam consequántur. Per Dóminum nostrum Iesum Christum Fílium tuum~: Þ qui tecum vivit et regnat in unitáte Spíritus Sancti Deus, „ per ómnia sǽcula sæculórum. & \selectlanguage{french} Dieu tout-puissant et éternel, Maître des vivants et des morts, qui prenez pitié de toutes choses, et qui connaissez d'avance ceux qui vous appartiennent par la foi et les œuvres, nous vous supplions~: que ceux pour qui nous répandons ces prières, ceux que le monde présent retient encore dans la chair, ou ceux qui, délivrés de leurs corps, ont été reçus dans le monde à venir, obtiennent de votre clémence le pardon de tous leurs péchés, grâce à l'intercession de tous vos saints. Par Notre-Seigneur Jésus-Christ votre Fils, qui règne avec vous dans l'unité du Saint-Esprit, Dieu, pour les siècles des siècles. \\
+
+® Amen. & ® Ainsi soit-il. \\
+
+↑ Dóminus vobíscum. & ↑ Le Seigneur soit avec vous. \\
+
+® Et cum spíritu tuo. & ® Et avec votre esprit. \\
+
+↑ Exáudiat nos omnípotens et miséricors Dóminus. & ↑ Que le Dieu tout-puissant et miséricordieux nous exauce. \\
+
+® Amen. & ® Ainsi soit-il. \\
+
+↑ Et fidélium ánimæ per misericórdiam Dei requiéscant in pace. & ↑ Et que par la miséricorde de Dieu les âmes des fidèles défunts reposent en paix. \\
+
+® Amen. & ® Ainsi soit-il. \\
+
+\end{longtable}
+
+\vspace{0.5cm}
+
+\thispagestyle{empty}
+
+\begin{center}
+    \greornamentation{1}{12}\greornamentation{1}{12}\greornamentation{1}{12}
+\end{center}
+
+\vspace{0.5cm}
+
+\Rubrique{On peut ajouter, \emph{ad libitum}, la bénédiction des champs~:}
+
+\vspace{0.5cm}
+
+\centering{{\color{rougeliturgique}{\textsc{Bénédiction des champs}}}}
+
+\begin{longtable}{>{\hspace{0.2cm}}p{0.45\textwidth}|>{\hspace{0.2cm}\normalsize}p{0.45\textwidth}}
+
+↑ Adiutórium nostrum in nómine Dómini. & ↑ Notre secours est dans le Nom du Seigneur. \\
+
+® Qui fecit cælum et terram. & ® Qui a fait le ciel et la terre. \\
+
+↑ Dóminus vobíscum. & ↑ Le Seigneur soit avec vous. \\
+
+® Et cum spíritu tuo. & ® Et avec votre esprit. \\
+
+Orémus. & Prions. \\
+
+\DropCap{O}{rámus} pietátem tuam, omnípotens Deus, Þ ut has primítias creatúræ tuæ, quas áëris et plúviæ temperaménto nutríre dignátus es,~„ bene±dictiónis tuæ imbre perfúndas, et fructus terræ tuæ usque ad maturitátem perdúcas. Tríbue quoque pópulo tuo de tuis munéribus tibi semper grátias ágere~; Þ ut a fertilitáte terræ esuriéntium ánimas bonis ómnibus affluéntibus répleas, „ et egénus et pauper laudent nomen glóriæ tuæ. Per Christum Dóminum nostrum. & Nous supplions votre bonté, ô Dieu tout-puissant~: daignez pénétrer de la rosée de votre bénédiction ces prémices de votre création que vous avez daigné nourrir des bienfaits de l'air et de la pluie. Daignez conduire jusqu'à maturité les fruits de votre terre. Donnez aussi à votre peuple de vous rendre grâces sans cesse pour vos bienfaits, remplissez de tous les biens, grâce à la fertilité de la terre, les âmes de ceux qui ont faim, afin que le pauvre et l'indigent louent le Nom de votre gloire. Par le Christ Notre Seigneur. \\
+
+® Amen. & ® Ainsi soit-il. \\
+
+\end{longtable}
+
+\Rubrique{On se retire en silence.\hfill}
+
+\end{document}
+
+

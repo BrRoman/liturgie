@@ -1,0 +1,18 @@
+\input{/Users/frromain/Informatique/Prog/Gregorio/Resources/Configuration.tex}
+
+\grechangedim{commentaryraise}{.3cm}{scalable}
+
+\begin{document}
+
+\setbox\scorebox=\vbox{\hsize=11.4 cm\relax % change the width of the score here
+  \fontsize{11.5}{12}\selectfont
+
+%% orbis_patrator.gabc
+
+\greannotation{\footnotesize\GaramondPremierProCaption\textsc{v}}
+\gregorioscore[a]{orbis_patrator.tex}
+
+
+}\pagewidth\wd\scorebox\pageheight\dimexpr\ht\scorebox+\dp\scorebox\relax\shipout\box\scorebox
+
+\end{document}
