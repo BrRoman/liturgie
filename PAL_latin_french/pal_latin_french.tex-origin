@@ -1,0 +1,103 @@
+\input{config.tex}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\newgeometry{inner=0cm, outer=0cm, tmargin=0.5cm, bmargin=0.2cm}
+
+\begin{center}
+
+\TitreB{+}
+
+\fontsize{8}{9}\selectfont
+
+\vspace{0.5cm}
+
+\centering{PAX}
+
+\vspace{0.3cm}
+
+\TitreA{Rituel}
+
+\TitreA{des bénédictions}
+
+\TitreA{de Règle}
+
+\vspace{0.7cm}
+
+\centering{\includegraphics[width=1cm]{blason.jpg}}
+
+\vspace{0.5cm}
+
+\TitreB{ABBAYE}
+
+\vspace{-0.3cm}
+
+\TitreB{SAINT-JOSEPH de CLAIRVAL}
+
+\vspace{-0.1cm}
+
+\TitreB{Flavigny-sur-Ozerain}
+
+\vspace{-0.3cm}
+
+\Ligne
+
+\vspace{0.3cm}
+
+\fontsize{8}{9}\selectfont
+
+\centering{\textit{– Pro manuscripto –}}
+
+\end{center}
+
+\restoregeometry
+
+\newpage
+
+\thispagestyle{empty}
+
+\cleardoublepage
+
+\section{Commémoraison des défunts}
+
+\thispagestyle{plain}
+
+\LF{Quóniam si voluísses sacrifícium, dedíssem útique~: € holocáustis non delectáberis.}{Si vous désiriez des sacrifices, je vous en offrirais, mais vous ne prenez point plaisir aux holocaustes.}
+
+\Ligne
+
+\thispagestyle{headings}
+
+\newpage
+
+% Table des matières :
+\renewcommand{\contentsname}{Table des matières}% Renommer le titre de la toc.
+\renewcommand{\cfttoctitlefont}{\TitreC}% Style du titre de la toc.
+\tocloftpagestyle{empty}% Pas d'entête ni de pied de page.
+\setlength{\cftbeforesecskip}{0.1cm}% Espace entre les entrées.
+\setlength{\cftsecnumwidth}{0cm}% Numéros de section supprimés (dans config.tex). Ici on réduit à 0 la taille du bloc qui les contient.
+\renewcommand{\cftsecfont}{\normalfont}% Arno Pro pour les titres de section.
+\renewcommand{\cftsecpagefont }{\normalfont}% Arno Pro pour les pages.
+\renewcommand{\cftsecleader}{\normalfont\dotfill}% Dotfill en Arno Pro pour l'espace entre section et page.
+\tableofcontents
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
