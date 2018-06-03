@@ -236,16 +236,21 @@
 %}
 
 % Latin/francais :
+%\newenvironment{LF}[2]{
+%    \setlength{\parindent}{0cm}
+%    \setlength{\leftskip}{0cm}
+%    \setlength{\parskip}{0cm}
+%    \selectlanguage{latin}
+%    \fontsize{9}{10}\selectfont#1\par
+%    \selectlanguage{french}
+%    \setlength{\leftskip}{0.3cm}
+%    \fontsize{8}{9}\selectfont\textit{#2}
+%    \vspace{0.1cm}
+%}
 \newenvironment{LF}[2]{
-    \setlength{\parindent}{0cm}
-    \setlength{\leftskip}{0cm}
-    \setlength{\parskip}{0cm}
-    \selectlanguage{latin}
-    \fontsize{9}{10}\selectfont#1\par
-    \selectlanguage{french}
-    \setlength{\leftskip}{0.3cm}
-    \fontsize{8}{9}\selectfont\textit{#2}
-    \vspace{0.1cm}
+    \begin{tabular}{p{5cm}p{5cm}}
+        \selectlanguage{latin}#1 & \selectlanguage{french}\small{#2} \\
+    \end{tabular}
 }
 
 % Ligne de séparation :
