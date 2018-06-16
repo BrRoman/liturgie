@@ -1,0 +1,115 @@
+\documentclass[12pt]{book}
+
+% Géométrie de la page :
+\usepackage{geometry}
+\geometry{paperwidth=14.85cm, paperheight=21cm, inner=1.5cm, outer=1.5cm, tmargin=1.5cm, bmargin=1.5cm, includefoot}
+
+% Choix d'une police principale :
+\usepackage{luatextra}
+\setmainfont[Ligatures=Rare]{Arno Pro}
+
+% Accès aux polices Opentype :
+\usepackage{fontspec}
+
+% Définition de polices :
+\newfontfamily{\GregPlantin}{GregPlantin}
+\newfontfamily{\FlavGaramond}{FlavGaramond}
+\newfontfamily{\DropCapFont}{Plantin Std}
+
+% Symboles :
+\usepackage{pifont}
+
+% Lettrines :
+\usepackage{lettrine}
+
+% Pour augmenter l'approche des caractères :
+\usepackage{soul}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% Gregorio %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[autocompile]{gregoriotex}
+\grechangedim{commentaryraise}{.4cm}{scalable}
+\grechangestyle{modeline}{\fontsize{12}{12}\selectfont\scshape}
+\grechangestyle{initial}{\fontsize{36}{36}\color{rougeliturgique}\DropCapFont}
+\grechangedim{afterinitialshift}{2.2mm}{fixed}
+\grechangedim{beforeinitialshift}{3mm}{fixed}
+\newbox\scorebox
+\gresetheadercapture{commentary}{grecommentary}{string}
+\let\grevanillacommentary\grecommentary
+\def\grecommentary#1{\grevanillacommentary{#1\kern 0.3mm}}
+\grechangestaffsize{14}% Taille des portées
+\gresetbarspacing{new}
+\grechangedim{bar@maior@standalone@notext}{0.3 cm}{scalable}
+\grechangedim{spacebeforeeolcustos}{0.3 cm}{scalable}
+
+% Couleur rouge :
+\definecolor{rougeliturgique}{cmyk}{0.15,1,1,0}
+
+% Style pour les références des partitions :
+\grechangestyle{commentary}{\color{rougeliturgique}\itshape\fontsize{9}{8}\selectfont}
+
+% Verset :
+\renewcommand{\Vbar}{\textbf{\color{rougeliturgique}\GregPlantin\symbol{8730}}}
+\catcode`\↑=\active % Alt-Maj-b
+\def↑{\Vbar}
+
+% Répons :
+\renewcommand{\Rbar}{\textbf{\color{rougeliturgique}\GregPlantin\symbol{164}}}
+\catcode`\®=\active % Alt-Maj-c
+\def®{\Rbar}
+
+% Croix haute :
+\renewcommand{\GreDagger}{\textrm{\color{rougeliturgique}\FlavGaramond \symbol{8224}}}
+\catcode`\Þ=\active % Alt-Maj-t
+\defÞ{\GreDagger}
+
+% Croix de Malte:
+\catcode`\±=\active % Alt-Maj-+
+\def±{{\fontspec{Menlo} \color{rougeliturgique}\symbol{10016}}}
+
+% Étoile dans les partitions :
+\def\GreStar{{\color{rougeliturgique}\tiny\raisebox{1.5ex}{\ding{72}}}\relax}
+
+% Étoile des Kyrie et Gloria étoilés :
+\catcode`\„=\active % Alt-Maj-s
+\def„{\raisebox{0.9ex}{\tiny{~\color{rougeliturgique}\ding{107}}}}
+
+% Antienne :
+\catcode`\¥=\active % Alt-Maj-g
+\def¥{{\fontspec{FlavGaramond} \symbol{8721}}}
+
+% Caractères composés (æ, œ, y) + accent aigu :
+\makeatletter
+\def\accentaigucaractere{\makebox[0pt][c]{´}}
+\newcommand\accentaigu[1]{\setlength{\@tempdima}{\widthof{#1}}\hbox{#1\kern-0.5\@tempdima\accentaigucaractere\kern0.5\@tempdima}}
+\makeatother
+\catcode`\Ð=\active% Alt-Maj-h
+\defÐ{\accentaigu{æ}}
+\catcode`\Ï=\active% Alt-Maj-k
+\defÏ{\accentaigu{œ}}
+\catcode`\Ÿ=\active% Alt-Maj-y
+\defŸ{\accentaigu{y}}
+
+% Divers symboles liturgiques :
+\catcode`\™=\active% Alt-Maj-8 % Temps pascal.
+\def™{\textit{\color{rougeliturgique}T.P.}}
+\catcode`\Ø=\active% Alt-Maj-$ % Psaume.
+\defØ{\textit{\color{rougeliturgique}Ps.}}
+\catcode`\→=\active% Alt-Maj-n % N. (in "Pontifici nostro N.").
+\def→{{\color{rougeliturgique}\itshape\small{N.}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% Fin Gregorio %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+\fontsize{13}{13}\selectfont
+\gregorioscore[a]{subvenite}
+
+\end{document}
+
+
