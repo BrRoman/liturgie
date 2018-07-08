@@ -1,20 +1,387 @@
-FERIA SECUNDA
+\documentclass{report}
 
-AD SEXTAM
+% Géométrie de la page :
+\usepackage{geometry}
+\geometry{paperwidth=10.5cm, paperheight=14.85cm, inner=1.2cm, outer=1.2cm, tmargin=0.9cm, bmargin=1cm, includehead}
+
+% Modification temporaire des marges :
+%\usepackage{scrextend}
+
+% Choix d'une police principale :
+\usepackage{luatextra}
+\setmainfont[Ligatures=Rare]{Arno Pro}
+
+% Langues latin et français (Césures, accents etc.) :
+\usepackage[latin, french]{babel}
+\selectlanguage{french}
+\frenchbsetup{ThinColonSpace=true}
+
+% Accès aux polices Opentype :
+\usepackage{fontspec}
+
+% Définition de polices :
+\newfontfamily{\GregPlantin}{GregPlantin}
+\newfontfamily{\Titre}[Style=Alternate]{Brioso Pro SemiboldDisp}
+\newfontfamily{\FlavGaramond}{FlavGaramond}
+\newfontfamily{\DropCapFont}{Plantin Std}
+
+% Pour pouvoir insérer des expressions (et non pas seulement des valeurs) dans des commandes telles que \setlength, \addtolength, etc. :
+\usepackage{calc}
+
+% Mise en forme des titres de sections :
+\usepackage[explicit]{titlesec}
+\titleformat{\section}{\filcenter}{}{0cm}
+{
+\fontsize{14}{16}\selectfont
+\parbox{.9\columnwidth}{\centering\textbf{{\textsc{#1}}}}}
+\titlespacing{\section}{0cm}{1cm}{1cm}
+
+% Entêtes et pieds de pages :
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage}
+\chead{\textsc{\rightmark}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\parindent}{0cm}
+\setlength{\headsep}{0.5cm} % Distance entre le header et le corps du texte.
+
+% Symboles :
+\usepackage{pifont}
+
+% Lettrines :
+\usepackage{lettrine}
+
+% Textes en parallèle :
+\usepackage{parallel}
+
+% Pour augmenter l'approche des caractères :
+\usepackage{soul}
+
+% Tableaux (litanies des saints) :
+\usepackage{longtable}
+\setlength{\tabcolsep}{0cm}
+
+% Alignement des cellules de tableaux :
+\usepackage{makecell}
+
+% Multicolonne :
+\usepackage{multicol}
+\setlength{\columnseprule}{0.5pt}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% Gregorio %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Hymne
+\usepackage[autocompile]{gregoriotex}
+\grechangedim{commentaryraise}{.4cm}{scalable}
+\grechangestyle{modeline}{\fontsize{11}{11}\selectfont\scshape}
+\grechangestyle{initial}{\fontsize{36}{36}\color{rougeliturgique}\DropCapFont}
+\grechangedim{afterinitialshift}{2.2mm}{fixed}
+\grechangedim{beforeinitialshift}{3mm}{fixed}
+\newbox\scorebox
+\gresetheadercapture{commentary}{grecommentary}{string}
+\let\grevanillacommentary\grecommentary
+\def\grecommentary#1{\grevanillacommentary{#1\kern 0.3mm}}
+\grechangestaffsize{16}% Taille des portées
+\gresetbarspacing{new}
+\grechangedim{bar@maior@standalone@notext}{0.3 cm}{scalable}
+\grechangedim{spacebeforeeolcustos}{0.3 cm}{scalable}
 
-Rector potens verax Deus,
+% Couleur rouge :
+\definecolor{rougeliturgique}{cmyk}{0.15,1,1,0}
+
+% Style pour les références des partitions :
+\grechangestyle{commentary}{\color{rougeliturgique}\itshape\fontsize{9}{8}\selectfont}
+
+% Verset :
+\renewcommand{\Vbar}{\textbf{\color{rougeliturgique}\GregPlantin\symbol{8730}}}
+\catcode`\↑=\active % Alt-Maj-b
+\def↑{\Vbar}
+
+% Répons :
+\renewcommand{\Rbar}{\textbf{\color{rougeliturgique}\GregPlantin\symbol{164}}}
+\catcode`\®=\active % Alt-Maj-c
+\def®{\Rbar}
+
+% Croix haute :
+\renewcommand{\GreDagger}{\textrm{\color{rougeliturgique}\FlavGaramond \symbol{8224}}}
+\catcode`\Þ=\active % Alt-Maj-t
+\defÞ{\GreDagger}
+
+% Croix de Malte :
+\catcode`\±=\active % Alt-Maj-+
+\def±{{\fontspec{Menlo} \color{rougeliturgique}\symbol{10016}}}
+
+% Étoile dans les partitions :
+\def\GreStar{{\color{rougeliturgique}\tiny\raisebox{1.5ex}{\ding{72}}}\relax}
+
+% Étoile des Kyrie et Gloria étoilés :
+\catcode`\„=\active % Alt-Maj-s
+\def„{\raisebox{0.9ex}{\tiny{~\color{rougeliturgique}\ding{107}}}}
+
+% Antienne :
+\catcode`\¥=\active % Alt-Maj-g
+\def¥{{\color{rougeliturgique}{\fontspec{FlavGaramond} \symbol{8721}}}}
+
+% Caractères composés (æ, œ, y) + accent aigu :
+\makeatletter
+\def\accentaigucaractere{\makebox[0pt][c]{´}}
+\newcommand\accentaigu[1]{\setlength{\@tempdima}{\widthof{#1}}\hbox{#1\kern-0.5\@tempdima\accentaigucaractere\kern0.5\@tempdima}}
+\makeatother
+\catcode`\Ð=\active% Alt-Maj-h
+\defÐ{\accentaigu{æ}}
+\catcode`\Ï=\active% Alt-Maj-k
+\defÏ{\accentaigu{œ}}
+\catcode`\Ÿ=\active% Alt-Maj-y
+\defŸ{\accentaigu{y}}
+
+% Divers symboles liturgiques :
+\catcode`\™=\active% Alt-Maj-8 % Temps pascal.
+\def™{\textit{\color{rougeliturgique}T.P.}}
+\catcode`\Ø=\active% Alt-Maj-$ % Psaume.
+\defØ{\textit{\color{rougeliturgique}Ps.}}
+\catcode`\→=\active% Alt-Maj-n % N. (in "Pontifici nostro N.").
+\def→{{\color{rougeliturgique}\itshape\small{N.}}}
+
+% Pour pouvoir aligner un texte sur les notes d'une partition (Fili Redémptor mundi etc.) :
+% (cf. site Gregorio/Tips and Tricks/Creating a Litany)
+\usepackage[savepos]{zref}
+\makeatletter 
+\newcounter{score}
+\newcounter{tabstop}[score]
+\newcommand{\grealign}{%
+	\@bsphack%
+	\ifgre@boxing\else%
+		\kern\gre@dimen@begindifference%
+		\stepcounter{tabstop}%
+		\expandafter\zsavepos{stop-\thescore-\thetabstop}%
+		\kern-\gre@dimen@begindifference%
+	\fi%
+	\@esphack%
+}
+\newcommand{\setstops}{%
+  \gdef\nstabbing@stops{%
+    \hspace*{-\oddsidemargin}\hspace{-1in}%
+    \hspace*{\zposx{stop-\thescore-1} sp}\=%
+  }%
+  \count@=\@ne
+  \loop\ifnum\count@<\value{tabstop}%
+  \begingroup\edef\x{\endgroup
+    \noexpand\g@addto@macro\noexpand\nstabbing@stops{%
+      \noexpand\hspace{-\noexpand\zposx{stop-\thescore-\the\count@} sp}%
+      \noexpand\hspace{\noexpand\zposx{stop-\thescore-\the\numexpr\count@+1} sp}\noexpand\=%
+    }%
+  }\x
+  \advance\count@\@ne
+  \repeat
+  \nstabbing@stops\kill
+}
+\makeatother
+\newenvironment{nstabbing}{
+  \setlength{\topsep}{0pt}%
+  \setlength{\partopsep}{0pt}%
+  \tabbing%
+  \setstops
+}
+{\endtabbing\stepcounter{score}}
+
+\gresetlastline{justified}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% Fin Gregorio %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commandes et environnements :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Espace fine :
+\DeclareRobustCommand{\mynobreakthinspace}{%
+\leavevmode\nobreak\hspace{0.08em}}
+\def~{\mynobreakthinspace{}}
+
+% Lettrines rouges :
+\newcommand\DropCapRed[2]{\vspace{-\baselineskip}\lettrine[realheight, nindent=0.5em, slope=-.5em]{{\color{rougeliturgique}#1}}{#2}}
+
+% Lettrines noires :
+\newcommand\DropCapBlack[2]{\vspace{-\baselineskip}\lettrine[realheight, nindent=0.5em, slope=-.5em]{#1}{#2}}
+
+% Étoile avec espace insécable avant et après :
+\newcommand\GreStarNbsp{\enspace\GreStar\enspace}
+
+% Environnement Boîte (espace avant, contenu) :
+\newenvironment{ParBox}[2]{
+  \setlength{\parindent}{0cm}
+  \begin{center}
+  \parbox[t]{14.85cm}{\vspace{#1} #2}
+  \end{center}
+  \par
+}
+
+% Style de paragraphe TitreA :
+\newenvironment{TitreA}[1]{
+  \setlength{\parindent}{0cm}
+  \setlength{\leftskip}{0cm}
+  \setlength{\rightskip}{0cm}
+  \setlength{\parskip}{-0.3cm}
+  \fontsize{32}{32}\selectfont
+  \begin{center}
+  \Titre\textsc{#1}
+  \end{center}
+}
+
+% Style de paragraphe TitreB :
+\newenvironment{TitreB}[1]{
+  \setlength{\parindent}{0cm}
+  \setlength{\leftskip}{0cm}
+  \setlength{\rightskip}{0cm}
+  \setlength{\parskip}{-0.3cm}
+  \fontsize{16}{18}\selectfont
+  \begin{center}
+    {\color{rougeliturgique}\textsc{#1}}
+  \end{center}
+}
+
+% Style de paragraphe TitreC :
+\newenvironment{TitreC}[1]{
+  \setlength{\parindent}{0cm}
+  \setlength{\leftskip}{0cm}
+  \setlength{\rightskip}{0cm}
+  \setlength{\parskip}{0cm}
+  \fontsize{12}{14}\selectfont
+  \begin{center}
+  {\color{rougeliturgique}\textsc{#1}}
+  \end{center}
+  \vspace{0.3cm}
+}
+
+% Normal :
+\newcommand\Normal{
+  \setlength{\parindent}{0.3cm}
+  \setlength{\leftskip}{0cm}
+  \setlength{\rightskip}{0cm}
+  \setlength{\parskip}{0cm}
+  \selectlanguage{latin}
+  \fontsize{11}{12}\selectfont
+}
+
+% Style de paragraphe Hymne :
+\newenvironment{Hymne}{
+  \setlength{\parindent}{-0.5cm}
+  \setlength{\leftskip}{0.5cm}
+  \setlength{\rightskip}{0cm}
+  \setlength{\parskip}{0cm}
+  \selectlanguage{latin}
+  \fontsize{11}{12}\selectfont
+}
+
+% Style de paragraphe Antienne :
+\newenvironment{Antienne}{
+  \setlength{\parindent}{0cm}
+  \setlength{\leftskip}{0cm}
+  \setlength{\rightskip}{0cm}
+  \setlength{\parskip}{0cm}
+  \selectlanguage{latin}
+  \fontsize{11}{12}\selectfont
+  \vspace{0.5cm}
+}
+
+% Style de paragraphe Rubrique :
+\newenvironment{Rubrique}[1]{
+  \selectlanguage{french}
+  \fontsize{12}{15}\selectfont
+  {\color{rougeliturgique}\textit{#1}}
+  \Normal
+}
+
+% Capitule :
+\newenvironment{Capitule}[1]{
+  \setlength{\parindent}{0cm}
+  \setlength{\leftskip}{0cm}
+  \setlength{\rightskip}{0cm}
+  \setlength{\parskip}{0cm}
+  \vspace{0.5cm}
+  {\color{rougeliturgique}\textsc{Capitulum}\hfill \small{#1}}
+  \vspace{0.5cm}
+}
+
+% Traduction :
+\newenvironment{Traduction}[1]{
+  \selectlanguage{french}
+  \fontsize{11}{11}\selectfont
+  \vspace{0.3cm}
+  \begin{addmargin}{1.5cm}
+  \input{scores/#1.tex}
+  \end{addmargin}
+  \vspace{0.3cm}
+  \Normal
+}
+
+% Partoche :
+\newenvironment{Partoche}[1]{
+  \fontsize{12}{12}\selectfont
+  \selectlanguage{latin}
+  \gregorioscore[a]{scores/#1}
+  \Traduction{#1}
+}
+
+% Latin/francais :
+\newenvironment{LF}[2]{
+  \begin{Parallel}[]{5cm}{5cm}
+  \selectlanguage{latin}
+  \ParallelLText{\fontsize{12}{13}\selectfont#1}
+  \selectlanguage{french}
+  \ParallelRText{\fontsize{11}{12}\selectfont#2}
+  \end{Parallel}
+  \Normal
+}
+
+% Ligne de séparation :
+\newcommand\Ligne{
+  \begin{center}
+  \thispagestyle{empty}
+  \greseparator{2}{10}
+  \end{center}
+}
+
+% Hyphenations :
+\hyphenation{al-le-lu-ia}
+\hyphenation{exau-cez}
+
+\begin{document}
+
+\begin{multicols}{2}
+
+
+%%%%%%%%%%%%%%%%%
+% LUNDI À SEXTE %
+%%%%%%%%%%%%%%%%%
+
+\section{Feria Secunda ad Sextam}
+
+\TitreC{Hymnus}
+
+\vspace{0.2cm}
+
+\Hymne{}
+
+\setlength{\leftskip}{0cm}
+\DropCapRed{R}{ector} potens verax Deus,
+
+\Hymne{}
 
 Qui témperas rerum vices,
 
 Splendóre mane ínstruis,
 
-Et ígnibus merídiem :
+Et ígnibus merídiem\thinspace:
 
-
+\vspace{0.3cm}
 
 Exstíngue flammas lítium,
 
@@ -24,7 +391,7 @@ Confer salútem córporum,
 
 Verámque pacem córdium.
 
-
+\vspace{0.3cm}
 
 Præsta, Páter piíssime,
 
@@ -34,97 +401,116 @@ Cum Spíritu Paráclito
 
 Regnans per omne sǽculum.
 
+\begin{flushright}
 Amen.
+\end{flushright}
+
+\vspace{0.5cm}
+
+\Antienne{¥ Aspice in me, et miserére mei Dómine.}
 
 
-A. Aspice in me, et miserére mei Dómine.
+\TitreC{Psalmus 118, 17\hfill(1)}
+
+\Normal
+
+\DropCapBlack{M}{irabília} testimónia tua\thinspace:\GreStarNbsp ídeo scrutáta est ea ánima mea.
+
+Declarátio sermónum tuórum illúminat\thinspace:\GreStarNbsp et intelléctum dat párvulis.
+
+Os meum apérui, et attráxi spíritum\thinspace:\GreStarNbsp quia mandáta tua desiderábam.
+
+Aspice in me, et miserére mei,\GreStarNbsp secúndum judícium diligéntium nomen tuum.
+
+Gressus meos dírige secúndum elóquium tuum\thinspace:\GreStarNbsp et non dominétur mei omnis injustítia.
+
+Rédime me a calúmniis hóminum\thinspace:\GreStarNbsp ut custódiam mandáta tua.
+
+Fáciem tuam illúmina super servum tuum\thinspace:\GreStarNbsp et doce me justificatiónes tuas.
+
+Exitus aquárum deduxérunt óculi mei\thinspace:\GreStarNbsp quia non custodiérunt legem tuam.
 
 
-Psalmus 118, 17[t](1)
+\TitreC{Psalmus 118, 18\hfill(2)}
 
-Mirabília testimónia tua : * ídeo scrutáta est ea ánima mea.
+\Normal
 
-Declarátio sermónum tuórum illúminat  : * et intelléctum dat párvulis.
+\DropCapBlack{J}{ustus} es, Dómine\thinspace:\GreStarNbsp et rectum judícium tuum.
 
-Os meum apérui, et attráxi spíritum : * quia mandáta tua desiderábam.
+Mandásti justítiam testimónia tua\thinspace:\GreStarNbsp et veritátem tuam nimis.
 
-Aspice in me, et miserére mei, * secúndum judícium diligéntium nomen tuum.
+Tabéscere me fecit zelus meus\thinspace:\GreStarNbsp quia oblíti sunt verba tua inimíci mei.
 
-Gressus meos dírige secúndum elóquium tuum : * et non dominétur mei omnis injustítia.
+Ignítum elóquium tuum veheménter\thinspace:\GreStarNbsp et servus tuus diléxit illud.
 
-Rédime me a calúmniis hóminum : * ut custódiam mandáta tua.
+Adolescéntulus sum ego et contémptus\thinspace:\GreStarNbsp justificatiónes tuas non sum oblítus.
 
-Fáciem tuam illúmina super servum tuum : * et doce me justificatiónes tuas.
+Justítia tua, justítia in ætérnum\thinspace:\GreStarNbsp et lex tua véritas.
 
-Exitus aquárum deduxérunt óculi mei : * quia non custodiérunt legem tuam.
+Tribulátio, et angústia invenérunt me\thinspace:\GreStarNbsp mandáta tua meditátio mea est.
 
-
-
-Psalmus 118, 18[t](2)
-
-Justus es, Dómine : * et rectum judícium tuum.
-
-Mandásti justítiam testimónia tua : * et veritátem tuam nimis.
-
-Tabéscere me fecit zelus meus : * quia oblíti sunt verba tua inimíci mei.
-
-Ignítum elóquium tuum veheménter : * et servus tuus diléxit illud.
-
-Adolescéntulus sum ego et contémptus : * justificatiónes tuas non sum oblítus.
-
-Justítia tua, justítia in ætérnum : * et lex tua véritas.
-
-Tribulátio, et angústia invenérunt me : * mandáta tua meditátio mea est.
-
-Æquitas testimónia tua in ætérnum : * intelléctum da mihi, et vivam.
+Æquitas testimónia tua in ætérnum\thinspace:\GreStarNbsp intelléctum da mihi, et vivam.
 
 
+\TitreC{Psalmus 118, 19\hfill(3)}
 
-Psalmus 118, 19[t](3)
+\Normal
 
-Clamávi in toto corde meo, exáudi me, Dómine : * justificatiónes tuas requíram.
+\DropCapBlack{C}{lamávi} in toto corde meo, exáudi me, Dómine\thinspace:\GreStarNbsp justificatiónes tuas requíram.
 
-Clamávi ad te, salvum me fac : * ut custódiam mandáta tua.
+Clamávi ad te, salvum me fac\thinspace:\GreStarNbsp ut custódiam mandáta tua.
 
-Prævéni in maturitáte, et clamávi : * quia in verba tua supersperávi.
+Prævéni in maturitáte, et clamávi\thinspace:\GreStarNbsp quia in verba tua supersperávi.
 
-Prævenérunt óculi mei ad te dilúculo : * ut meditárer elóquia tua.
+Prævenérunt óculi mei ad te dilúculo\thinspace:\GreStarNbsp ut meditárer elóquia tua.
 
-Vocem meam audi secúndum misericórdiam tuam, Dómine : * et secúndum judícium tuum vivífica me.
+Vocem meam audi secúndum misericórdiam tuam, Dómine\thinspace:\GreStarNbsp et secúndum judícium tuum vivífica me.
 
-Appropinquavérunt persequéntes me iniquitáti : * a lege autem tua longe facti sunt.
+Appropinquavérunt persequéntes me iniquitá\-ti\thinspace:\GreStarNbsp a lege autem tua longe facti sunt.
 
-Prope es tu, Dómine : * et omnes viæ tuæ véritas.
+Prope es tu, Dómine\thinspace:\GreStarNbsp et omnes viæ tuæ véritas.
 
-Inítio cognóvi de testimóniis tuis : * quia in ætérnum fundásti ea.
+Inítio cognóvi de testimóniis tuis\thinspace:\GreStarNbsp quia in ætérnum fundásti ea.
 
+\Antienne{¥ Aspice in me, et miserére mei Dómine.}
 
-Capitule
+\Capitule{Ga 6, 2}
 
-Alter altérius ónera portáte, * et sic adimplébitis legem Christi.
+\DropCapBlack{A}{lter} altérius ónera portáte,\GreStarNbsp et sic adimplébitis legem Christi.
 
+\vspace{0.3cm}
 
-V. Dóminus regit me, et nihil mihi déerit.
+↑ Dóminus regit me, et nihil mihi déerit.
 
-R. In loco páscuæ ibi me collocávit.
-
-
-
-FERIA SECUNDA
-
-AD NONAM 
+® In loco páscuæ ibi me collocávit.
 
 
-Hymne
+%%%%%%%%%%%%%%%%
+% LUNDI À NONE %
+%%%%%%%%%%%%%%%%
 
-Rerum, Deus, tenax vigor,
+\columnbreak
+
+\section{Feria secunda ad Nonam}
+
+\TitreC{Hymnus}
+
+\vspace{0.2cm}
+
+\Hymne{}
+
+\setlength{\leftskip}{0cm}
+\DropCapRed{R}{erum}, Deus, tenax vigor,
+
+\Hymne{}
 
 Immótus in te pérmanens,
 
 Lucis diúrnæ témpora
 
-Succéssibus detérminans:
+Succéssibus detérminans\thinspace:
 
+\vspace{0.3cm}
 
 Largíre clarum véspere,
 
@@ -134,109 +520,128 @@ Sed prǽmium mortis sacræ
 
 Perénnis instet glória.
 
+\vspace{0.3cm}
 
 Præsta, Pater piíssime,
 
-Patríque compar Únice,
+Patríque compar Unice,
 
 Cum Spíritu Paráclito
 
 Regnans per omne sǽculum.
 
+\begin{flushright}
 Amen.
+\end{flushright}
+
+\Antienne{¥ Fiat manus tua Dómine, ut salvum me fácias, quia mandáta tua concupívi.}
 
 
-A. Fiat manus tua Dómine, ut salvum me fácias, quia mandáta tua concupívi.
+\TitreC{Psalmus 118, 20\hfill(1)}
+
+\Normal
+
+\DropCapBlack{V}{ide} humilitátem meam, et éripe me\thinspace:\GreStarNbsp quia legem tuam non sum oblítus.
+
+Júdica judícium meum, et rédime me\thinspace:\GreStarNbsp propter elóquium tuum vivífica me.
+
+Longe a peccatóribus salus\thinspace:\GreStarNbsp quia justificatiónes tuas non exquisiérunt.
+
+Misericórdiæ tuæ multæ, Dómine\thinspace:\GreStarNbsp secúndum judícium tuum vivífica me.
+
+Multi qui persequúntur me, et tríbulant me\thinspace:\GreStarNbsp a testimóniis tuis non declinávi.
+
+Vidi prævaricántes, et tabescébam\thinspace:\GreStarNbsp quia elóquia tua non custodiérunt.
+
+Vide quóniam mandáta tua diléxi, Dómine\thinspace:\GreStarNbsp in misericórdia tua vivífica me.
 
 
-Psalmus 118, 20[t](1)
+\TitreC{Psalmus 118, 21\hfill(2)}
 
-Vide humilitátem meam, et éripe me: * quia legem tuam non sum oblítus.
+\Normal
 
-Júdica judícium meum, et rédime me: * propter elóquium tuum vivífica me.
+\DropCapBlack{P}{rincípium} verbórum tuórum, véritas\thinspace:\GreStarNbsp in ætérnum ómnia judícia justítiæ tuæ.
 
-Longe a peccatóribus salus: * quia justificatiónes tuas non exquisiérunt.
+Príncipes persecúti sunt me gratis\thinspace:\GreStarNbsp et a verbis tuis formidávit cor meum.
 
-Misericórdiæ tuæ multæ, Dómine: * secúndum judícium tuum vivífica me.
+Lætábor ego super elóquia tua\thinspace:\GreStarNbsp sicut qui invénit spólia multa.
 
-Multi qui persequúntur me, et tríbulant me: * a testimóniis tuis non declinávi.
+Iniquitátem ódio hábui, et abominátus sum\thinspace:\GreStarNbsp legem autem tuam diléxi.
 
-Vidi prævaricántes, et tabescébam: * quia elóquia tua non custodiérunt.
+Sépties in die laudem dixi tibi,\GreStarNbsp super judícia justítiæ tuæ.
 
-Vide quóniam mandáta tua diléxi, Dómine: * in misericórdia tua vivífica me.
+Pax multa diligéntibus legem tuam\thinspace:\GreStarNbsp et non est illis scándalum.
 
-Psalmus 118, 21[t](2)
+Exspectábam salutáre tuum, Dómine\thinspace:\GreStarNbsp et mandáta tua diléxi.
 
-Princípium verbórum tuórum, véritas: * in ætérnum ómnia judícia justítiæ tuæ.
+Custodívit ánima mea testimónia tua\thinspace:\GreStarNbsp et diléxit ea veheménter.
 
-Príncipes persecúti sunt me gratis: * et a verbis tuis formidávit cor meum.
-
-Lætábor ego super elóquia tua: * sicut qui invénit spólia multa.
-
-Iniquitátem ódio hábui, et abominátus sum: * legem autem tuam diléxi.
-
-Sépties in die laudem dixi tibi, * super judícia justítiæ tuæ.
-
-Pax multa diligéntibus legem tuam: * et non est illis scándalum.
-
-Exspectábam salutáre tuum, Dómine: * et mandáta tua diléxi.
-
-Custodívit ánima mea testimónia tua: * et diléxit ea veheménter.
-
-Servávi mandáta tua, et testimónia tua: * quia omnes viæ meæ in conspéctu tuo.
-
-Psalmus 118, 22[t](3)
-
-Appropínquet deprecátio mea in conspéctu tuo, Dómine: * juxta elóquium tuum da mihi intelléctum.
-
-Intret postulátio mea in conspéctu tuo: * secúndum elóquium tuum éripe me.
-
-Eructábunt lábia mea hymnum, * cum docúeris me justificatiónes tuas.
-
-Pronuntiábit lingua mea elóquium tuum: * quia ómnia mandáta tua æquitas.
-
-Fiat manus tua ut salvet me: * quóniam mandáta tua elégi.
-
-Concupívi salutáre tuum, Dómine: * et lex tua meditátio mea est.
-
-Vivet ánima mea, et laudábit te: * et judícia tua adjuvábunt me.
-
-Errávi, sicut ovis, quæ périit: * quǽre servum tuum, quia mandáta tua non sum oblítus.
+Servávi mandáta tua, et testimónia tua\thinspace:\GreStarNbsp quia omnes viæ meæ in conspéctu tuo.
 
 
-Capitule
+\TitreC{Psalmus 118, 22\hfill(3)}
 
-Empti enim estis prétio magno~: * glorificáte et portáte Deum in córpore vestro.
+\Normal
+
+\vspace{-0.2cm}
+
+\DropCapBlack{A}{ppropínquet} deprecátio mea in conspéctu tuo, Dómine\thinspace:\GreStarNbsp juxta elóquium tuum da mihi intelléctum.
+
+Intret postulátio mea in conspéctu tuo\thinspace:\GreStarNbsp secúndum elóquium tuum éripe me.
+
+Eructábunt lábia mea hymnum,\GreStarNbsp cum docúeris me justificatiónes tuas.
+
+Pronuntiábit lingua mea elóquium tuum\thinspace:\GreStarNbsp quia ómnia mandáta tua æquitas.
+
+Fiat manus tua ut salvet me\thinspace:\GreStarNbsp quóniam mandáta tua elégi.
+
+Concupívi salutáre tuum, Dómine\thinspace:\GreStarNbsp et lex tua meditátio mea est.
+
+Vivet ánima mea, et laudábit te\thinspace:\GreStarNbsp et judícia tua adjuvábunt me.
+
+Errávi, sicut ovis, quæ périit\thinspace:\GreStarNbsp quære servum tuum, quia mandáta tua non sum oblítus.
+
+\vspace{-0.4cm}
+
+\Antienne{¥ Fiat manus tua Dómine, ut salvum me fácias, quia mandáta tua concupívi.}
+
+\Capitule{1 Co 6, 20}
+
+\DropCapBlack{E}{mpti} enim estis prétio magno\thinspace:\GreStarNbsp glorificáte et portáte Deum in córpore vestro.
+
+\vspace{0.3cm}
+
+↑ Ab occúltis meis munda me, Dómine.
+
+® Et ab aliénis parce servo tuo.
 
 
-V. Ab occúltis meis munda me, Dómine.
+%%%%%%%%%%%%%%%%%%%
+% SEMAINE À SEXTE %
+%%%%%%%%%%%%%%%%%%%
 
-R. Et ab aliénis parce servo tuo.
+\columnbreak
 
+\section{Per hebdomadam ad Sextam}
 
+\vspace{-0.4cm}
 
+\TitreC{Hymnus}
 
+\Hymne{}
 
+\setlength{\leftskip}{0cm}
+\DropCapRed{R}{ector} potens verax Deus,
 
-
-
-
-PER HEBDOMADAM
-
-AD SEXTAM
-
-
-
-Hymne
-
-Rector potens verax Deus,
+\Hymne{}
 
 Qui témperas rerum vices,
 
 Splendóre mane ínstruis,
 
-Et ígnibus merídiem:
+Et ígnibus merídiem\thinspace:
 
+\vspace{0.3cm}
 
 Exstíngue flammas lítium,
 
@@ -246,92 +651,114 @@ Confer salútem córporum,
 
 Verámque pacem córdium.
 
+\vspace{0.3cm}
 
 Præsta, Páter piíssime,
 
-Patríque compar Únice,
+Patríque compar Unice,
 
 Cum Spíritu Paráclito
 
 Regnans per omne sǽculum.
 
+\begin{flushright}
 Amen.
+\end{flushright}
+
+\Antienne{¥ Qui hábitas in cælis, miserére nobis.}
 
 
-A. Qui hábitas in cælis, miserére nobis.
+\TitreC{Psaume 122\hfill (1)}
+
+\Normal
+
+\DropCapBlack{A}{d} te levávi óculos meos,\GreStarNbsp qui hábitas in cælis.
+
+Ecce, sicut óculi servórum \GreStar\ in mánibus dominórum suórum,
+
+Sicut óculi ancíllæ in mánibus dóminæ suæ\thinspace:\GreStarNbsp ita óculi nostri ad Dóminum, Deum nostrum, donec misereátur nostri.
+
+Miserére nostri, Dómine, miserére nostri\thinspace:\GreStarNbsp quia multum repléti sumus despectióne\thinspace:
+
+Quia multum repléta est ánima nostra\thinspace:\GreStarNbsp oppróbrium abundántibus, et despéctio supérbis.
 
 
-Psaume 122
+\TitreC{Psaume 123\hfill (2)}
 
-Ad te levávi óculos meos, * qui hábitas in cælis.
+\Normal
 
-Ecce, sicut óculi servórum * in mánibus dominórum suórum,
+\DropCapBlack{N}{isi} quia Dóminus erat in nobis, dicat nunc Israël\thinspace:\GreStarNbsp nisi quia Dóminus erat in nobis,
 
-Sicut óculi ancíllæ in mánibus dóminæ suæ: * ita óculi nostri ad Dóminum, Deum nostrum, donec misereátur nostri.
+Cum exsúrgerent hómines in nos,\GreStarNbsp forte vivos deglutíssent nos\thinspace:
 
-Miserére nostri, Dómine, miserére nostri: * quia multum repléti sumus despectióne:
+Cum irascerétur furor eórum in nos,\GreStarNbsp fórsitan aqua absorbuísset nos.
 
-Quia multum repléta est ánima nostra: * oppróbrium abundántibus, et despéctio supérbis.
+Torréntem pertransívit ánima nostra\thinspace:\GreStarNbsp fórsitan pertransísset ánima nostra aquam intolerábilem.
 
+Benedíctus Dóminus \GreStar\ qui non dedit nos in captiónem déntibus eórum.
 
-Psaume 123
+Anima nostra sicut passer erépta est \GreStar\ de láqueo venántium\thinspace:
 
-Nisi quia Dóminus erat in nobis, dicat nunc Israël: * nisi quia Dóminus erat in nobis,
+Láqueus contrítus est,\GreStarNbsp et nos liberáti sumus.
 
-Cum exsúrgerent hómines in nos, * forte vivos deglutíssent nos:
-
-Cum irascerétur furor eórum in nos, * fórsitan aqua absorbuísset nos.
-
-Torréntem pertransívit ánima nostra: * fórsitan pertransísset ánima nostra aquam intolerábilem.
-
-Benedíctus Dóminus * qui non dedit nos in captiónem déntibus eórum.
-
-Anima nostra sicut passer erépta est * de láqueo venántium:
-
-Láqueus contrítus est, * et nos liberáti sumus.
-
-Adjutórium nostrum in nómine Dómini, * qui fecit cælum et terram.
+Adjutórium nostrum in nómine Dómini,\GreStarNbsp qui fecit cælum et terram.
 
 
-Psaume 124
+\vspace{-0.3cm}
 
-Qui confídunt in Dómino, sicut mons Sion: * non commovébitur in ætérnum, qui hábitat in Jerúsalem.
+\TitreC{Psaume 124\hfill (3)}
 
-Montes in circúitu ejus: * et Dóminus in circúitu pópuli sui, ex hoc nunc et usque in sǽculum.
+\vspace{-0.1cm}
 
-Quia non relínquet Dóminus virgam peccatórum super sortem justórum: * ut non exténdant justi ad iniquitátem manus suas.
+\Normal
 
-Bénefac, Dómine, bonis, * et rectis corde.
+\DropCapBlack{Q}{ui} confídunt in Dómino, sicut mons Sion\thinspace:\GreStarNbsp non commovébitur in ætérnum, qui hábitat in Jerúsalem.
 
-Declinántes autem in obligatiónes addúcet Dóminus cum operántibus iniquitátem: * pax super Israël.
+Montes in circúitu ejus\thinspace:\GreStarNbsp et Dóminus in circúitu pópuli sui, ex hoc nunc et usque in sǽculum.
+
+Quia non relínquet Dóminus virgam peccatórum super sortem justórum\thinspace:\GreStarNbsp ut non exténdant justi ad iniquitátem manus suas.
+
+Bénefac, Dómine, bonis,\GreStarNbsp et rectis corde.
+
+Declinántes autem in obligatiónes addúcet Dóminus cum operántibus iniquitátem\thinspace:\GreStarNbsp pax super Israël.
+
+\Antienne{¥ Qui hábitas in cælis, miserére nobis.}
+
+\Capitule{Ga 6, 2}
+
+\DropCapBlack{A}{lter} altérius ónera portáte \GreStar\ et sic adimplébitis legem Christi.
+
+\vspace{0.3cm}
+
+↑ Dóminus regit me, et nihil mihi déerit.
+
+® In loco páscuæ ibi me collocávit.
 
 
-Capitule
+%%%%%%%%%%%%%%%%%%
+% SEMAINE À NONE %
+%%%%%%%%%%%%%%%%%%
 
-Alter altérius ónera portáte * et sic adimplébitis legem Christi.
+\section{Per hebdomadam ad Nonam}
 
+\TitreC{Hymnus}
 
-V. Dóminus regit me, et nihil mihi déerit.
+\vspace{0.2cm}
 
-R. In loco páscuæ ibi me collocávit.
+\Hymne{}
 
+\setlength{\leftskip}{0cm}
+\DropCapRed{R}{erum}, Deus, tenax vigor,
 
-
-
-
-Per hebdomadam ad Nonam
-
-
-Hymne
-
-Rerum, Deus, tenax vigor,
+\Hymne{}
 
 Immótus in te pérmanens,
 
 Lucis diúrnæ témpora
 
-Succéssibus detérminans:
+Succéssibus detérminans\thinspace:
 
+\vspace{0.3cm}
 
 Largíre clarum véspere,
 
@@ -341,88 +768,108 @@ Sed prǽmium mortis sacræ
 
 Perénnis instet glória.
 
+\vspace{0.3cm}
 
 Præsta, Pater piíssime,
 
-Patríque compar Únice,
+Patríque compar Unice,
 
 Cum Spíritu Paráclito
 
 Regnans per omne sǽculum.
 
+\begin{flushright}
 Amen.
+\end{flushright}
+
+\Antienne{¥ Beáti omnes, qui timent Dóminum.}
 
 
-A. Beáti omnes, qui timent Dóminum.
+\TitreC{Psaume 125\hfill (1)}
+
+\Normal
+
+\DropCapBlack{I}{n converténdo} Dóminus captivitátem Sion\thinspace:\GreStarNbsp facti sumus sicut consoláti\thinspace:
+
+Tunc replétum est gáudio os nostrum\thinspace:\GreStarNbsp et lingua nostra exsultatióne.
+
+Tunc dicent inter gentes\thinspace:\GreStarNbsp Magnificávit Dóminus fácere cum eis.
+
+Magnificávit Dóminus fácere nobíscum\thinspace:\GreStarNbsp facti sumus lætántes.
+
+Convérte, Dómine, captivitátem nostram,\GreStarNbsp sicut torrens in Austro.
+
+Qui séminant in lácrimis,\GreStarNbsp in exsultatióne metent.
+
+Eúntes ibant et flebant,\GreStarNbsp mitténtes sémina sua.
+
+Veniéntes autem vénient cum exsultatióne,\GreStarNbsp portántes manípulos suos.
 
 
-Psaume 125
+\TitreC{Psaume 126\hfill (2)}
 
-In converténdo Dóminus captivitátem Sion: * facti sumus sicut consoláti:
+\Normal
 
-Tunc replétum est gáudio os nostrum: * et lingua nostra exsultatióne.
+\DropCapBlack{N}{isi} Dóminus ædificáverit domum,\GreStarNbsp in vanum laboravérunt qui ædíficant eam.
 
-Tunc dicent inter gentes: * Magnificávit Dóminus fácere cum eis.
+Nisi Dóminus custodíerit civitátem,\GreStarNbsp frustra vígilat qui custódit eam.
 
-Magnificávit Dóminus fácere nobíscum: * facti sumus lætántes.
+Vanum est vobis ante lucem súrgere\thinspace:\GreStarNbsp súrgite postquam sedéritis, qui manducátis panem dolóris.
 
-Convérte, Dómine, captivitátem nostram, * sicut torrens in Austro.
+Cum déderit diléctis suis somnum\thinspace:\GreStarNbsp ecce heréditas Dómini fílii\thinspace: merces, fructus ventris.
 
-Qui séminant in lácrimis, * in exsultatióne metent.
+Sicut sagíttæ in manu poténtis\thinspace:\GreStarNbsp ita fílii excussórum.
 
-Eúntes ibant et flebant, * mitténtes sémina sua.
-
-Veniéntes autem vénient cum exsultatióne, * portántes manípulos suos.
+Beátus vir, qui implévit desidérium suum ex ipsis\thinspace:\GreStarNbsp non confundétur cum loquétur inimícis suis in porta.
 
 
-Psaume 126
+\TitreC{Psaume 127\hfill (3)}
 
-Nisi Dóminus ædificáverit domum, * in vanum laboravérunt qui ædíficant eam.
+\Normal
 
-Nisi Dóminus custodíerit civitátem, * frustra vígilat qui custódit eam.
+\DropCapBlack{B}{eáti}, omnes, qui timent Dóminum,\GreStarNbsp qui ámbulant in viis ejus.
 
-Vanum est vobis ante lucem súrgere: * súrgite postquam sedéritis, qui manducátis panem dolóris.
+Labóres mánuum tuárum quia manducábis\thinspace:\GreStarNbsp beátus es, et bene tibi erit.
 
-Cum déderit diléctis suis somnum: * ecce heréditas Dómini fílii: merces, fructus ventris.
+Uxor tua sicut vitis abúndans,\GreStarNbsp in latéribus domus tuæ.
 
-Sicut sagíttæ in manu poténtis: * ita fílii excussórum.
+Fílii tui sicut novéllæ olivárum,\GreStarNbsp in circúitu mensæ tuæ.
 
-Beátus vir, qui implévit desidérium suum ex ipsis: * non confundétur cum loquétur inimícis suis in porta.
+Ecce, sic benedicétur homo,\GreStarNbsp qui timet Dóminum.
 
+Benedícat tibi Dóminus ex Sion\thinspace:\GreStarNbsp et vídeas bona Jerúsalem ómnibus diébus vitæ tuæ.
 
-Psaume 127
+Et vídeas fílios filiórum tuórum,\GreStarNbsp pacem super Israel.
 
-Beáti, omnes, qui timent Dóminum, * qui ámbulant in viis ejus.
+\Antienne{¥ Beáti omnes, qui timent Dóminum.}
 
-Labóres mánuum tuárum quia manducábis: * beátus es, et bene tibi erit.
+\Capitule{1 Co 6, 20}
 
-Uxor tua sicut vitis abúndans, * in latéribus domus tuæ.
+\DropCapBlack{E}{mpti} enim estis prétio magno\thinspace:\GreStarNbsp glorificáte et portáte Deum in córpore vestro.
 
-Fílii tui sicut novéllæ olivárum, * in circúitu mensæ tuæ.
+\vspace{0.3cm}
 
-Ecce, sic benedicétur homo, * qui timet Dóminum.
+↑ Ab occúltis meis munda me, Dómine.
 
-Benedícat tibi Dóminus ex Sion: * et vídeas bona Jerúsalem ómnibus diébus vitæ tuæ.
+® Et ab aliénis parce servo tuo.
 
-Et vídeas fílios filiórum tuórum, * pacem super Israel.
+\end{multicols}
 
+\vspace{0.3cm}
 
-Capitule
+\Ligne
 
-Empti enim estis prétio magno~: glorificáte et portáte Deum in córpore vestro.
+\Normal
 
+\vspace{0.5cm}
 
-V. Ab occúltis meis munda me, Dómine.
+{\color{rougeliturgique}Oratio.}\par
 
-R. Et ab aliénis parce servo tuo.
+\vspace{0.5cm}
 
+\DropCapRed{A}{ cunctis} nos, quǽsumus Dómine, mentis et córporis defénde perículis~; Þ et intercedénte beáta et gloriósa semper Vírgine Dei Genitríce María, cum beáto Joseph, beátis Apóstolis Petro et Paulo, atque beáto Patre nostro Benedícto et ómnibus Sanctis, salútem nobis tríbue benígnus et pacem,\GreStarNbsp ut destrúctis adversitátibus et erróribus univérsis, Ecclésia tua secúra tibi sérviat libertáte. Per eúmdem.
 
-
-
-Oratio.
-
-A cunctis nos, quǽsumus Dómine, mentis et córporis defénde perículis~; + et intercedénte beáta et gloriósa semper Vírgine Dei Genitríce María, cum beáto Joseph, beátis Apóstolis Petro et Paulo, atque beáto Patre nostro Benedícto et ómnibus Sanctis, salútem nobis tríbue benígnus et pacem, * ut destrúctis adversitátibus et erróribus univérsis, Ecclésia tua secúra tibi sérviat libertáte. Per eúmdem.
-
+\end{document}
 
 
 
