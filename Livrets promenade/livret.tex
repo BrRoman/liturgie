@@ -205,11 +205,11 @@
 \leavevmode\nobreak\hspace{0.08em}}
 \def~{\mynobreakthinspace{}}
 
-% Lettrines rouges :
-\newcommand\DropCapRed[2]{\vspace{-\baselineskip}\lettrine[realheight, nindent=0.5em, slope=-.5em]{{\color{rougeliturgique}#1}}{#2}}
+% Lettrines rouges [Lettrine, reste du mot, coeff. de dilatation au-dessus de la 1ère ligne, coeff. d'élévation au-dessus de la 1ère ligne] :
+\newcommand\DropCapRed[4]{\vspace{-\baselineskip}\lettrine[realheight, nindent=0.5em, slope=-.5em, loversize=#3, lraise=#4]{{\color{rougeliturgique}#1}}{#2}}
 
-% Lettrines noires :
-\newcommand\DropCapBlack[2]{\vspace{-\baselineskip}\lettrine[realheight, nindent=0.5em, slope=-.5em]{#1}{#2}}
+% Lettrines noires [Lettrine, reste du mot, coeff. de dilatation au-dessus de la 1ère ligne, coeff. d'élévation au-dessus de la 1ère ligne] :
+\newcommand\DropCapBlack[4]{\vspace{-\baselineskip}\lettrine[realheight, nindent=0.5em, slope=-.5em, loversize=#3, lraise=#4]{#1}{#2}}
 
 % Étoile avec espace insécable avant et après :
 \newcommand\GreStarNbsp{\enspace\GreStar\enspace}
@@ -371,7 +371,7 @@
 \Hymne{}
 
 \setlength{\leftskip}{0cm}
-\DropCapRed{R}{ector} potens verax Deus,
+\DropCapRed{R}{ector}{0.1}{0} potens verax Deus,
 
 \Hymne{}
 
@@ -414,7 +414,7 @@ Amen.
 
 \Normal
 
-\DropCapBlack{M}{irabília} testimónia tua\thinspace:\GreStarNbsp ídeo scrutáta est ea ánima mea.
+\DropCapBlack{M}{irabília}{0}{0} testimónia tua\thinspace:\GreStarNbsp ídeo scrutáta est ea ánima mea.
 
 Declarátio sermónum tuórum illúminat\thinspace:\GreStarNbsp et intelléctum dat párvulis.
 
@@ -435,7 +435,7 @@ Exitus aquárum deduxérunt óculi mei\thinspace:\GreStarNbsp quia non custodié
 
 \Normal
 
-\DropCapBlack{J}{ustus} es, Dómine\thinspace:\GreStarNbsp et rectum judícium tuum.
+\DropCapBlack{J}{ustus}{-0.1}{0.2} es, Dómine\thinspace:\GreStarNbsp et rectum judícium tuum.
 
 Mandásti justítiam testimónia tua\thinspace:\GreStarNbsp et veritátem tuam nimis.
 
@@ -456,7 +456,7 @@ Tribulátio, et angústia invenérunt me\thinspace:\GreStarNbsp mandáta tua med
 
 \Normal
 
-\DropCapBlack{C}{lamávi} in toto corde meo, exáudi me, Dómine\thinspace:\GreStarNbsp justificatiónes tuas requíram.
+\DropCapBlack{C}{lamávi}{0}{0} in toto corde meo, exáudi me, Dómine\thinspace:\GreStarNbsp justificatiónes tuas requíram.
 
 Clamávi ad te, salvum me fac\thinspace:\GreStarNbsp ut custódiam mandáta tua.
 
@@ -476,7 +476,7 @@ Inítio cognóvi de testimóniis tuis\thinspace:\GreStarNbsp quia in ætérnum f
 
 \Capitule{Ga 6, 2}
 
-\DropCapBlack{A}{lter} altérius ónera portáte,\GreStarNbsp et sic adimplébitis legem Christi.
+\DropCapBlack{A}{lter}{0}{0} altérius ónera portáte,\GreStarNbsp et sic adimplébitis legem Christi.
 
 \vspace{0.3cm}
 
@@ -500,7 +500,7 @@ Inítio cognóvi de testimóniis tuis\thinspace:\GreStarNbsp quia in ætérnum f
 \Hymne{}
 
 \setlength{\leftskip}{0cm}
-\DropCapRed{R}{erum}, Deus, tenax vigor,
+\DropCapRed{R}{erum}{0.1}{0}, Deus, tenax vigor,
 
 \Hymne{}
 
@@ -541,7 +541,7 @@ Amen.
 
 \Normal
 
-\DropCapBlack{V}{ide} humilitátem meam, et éripe me\thinspace:\GreStarNbsp quia legem tuam non sum oblítus.
+\DropCapBlack{V}{ide}{0}{0.1} humilitátem meam, et éripe me\thinspace:\GreStarNbsp quia legem tuam non sum oblítus.
 
 Júdica judícium meum, et rédime me\thinspace:\GreStarNbsp propter elóquium tuum vivífica me.
 
@@ -560,7 +560,7 @@ Vide quóniam mandáta tua diléxi, Dómine\thinspace:\GreStarNbsp in misericór
 
 \Normal
 
-\DropCapBlack{P}{rincípium} verbórum tuórum, véritas\thinspace:\GreStarNbsp in ætérnum ómnia judícia justítiæ tuæ.
+\DropCapBlack{P}{rincípium}{0}{0} verbórum tuórum, véritas\thinspace:\GreStarNbsp in ætérnum ómnia judícia justítiæ tuæ.
 
 Príncipes persecúti sunt me gratis\thinspace:\GreStarNbsp et a verbis tuis formidávit cor meum.
 
@@ -585,7 +585,7 @@ Servávi mandáta tua, et testimónia tua\thinspace:\GreStarNbsp quia omnes viæ
 
 \vspace{-0.2cm}
 
-\DropCapBlack{A}{ppropínquet} deprecátio mea in conspéctu tuo, Dómine\thinspace:\GreStarNbsp juxta elóquium tuum da mihi intelléctum.
+\DropCapBlack{A}{ppropínquet}{0}{0} deprecátio mea in conspéctu tuo, Dómine\thinspace:\GreStarNbsp juxta elóquium tuum da mihi intelléctum.
 
 Intret postulátio mea in conspéctu tuo\thinspace:\GreStarNbsp secúndum elóquium tuum éripe me.
 
@@ -605,11 +605,11 @@ Errávi, sicut ovis, quæ périit\thinspace:\GreStarNbsp quære servum tuum, qui
 
 \Antienne{¥ Fiat manus tua Dómine, ut salvum me fácias, quia mandáta tua concupívi.}
 
+\vspace{-0.4cm}
+
 \Capitule{1 Co 6, 20}
 
-\DropCapBlack{E}{mpti} enim estis prétio magno\thinspace:\GreStarNbsp glorificáte et portáte Deum in córpore vestro.
-
-\vspace{0.3cm}
+\DropCapBlack{E}{mpti}{0.1}{0} enim estis prétio magno\thinspace:\GreStarNbsp glo\-rificáte et portáte Deum in córpore vestro.
 
 ↑ Ab occúltis meis munda me, Dómine.
 
@@ -631,7 +631,7 @@ Errávi, sicut ovis, quæ périit\thinspace:\GreStarNbsp quære servum tuum, qui
 \Hymne{}
 
 \setlength{\leftskip}{0cm}
-\DropCapRed{R}{ector} potens verax Deus,
+\DropCapRed{R}{ector}{0.1}{0} potens verax Deus,
 
 \Hymne{}
 
@@ -672,7 +672,7 @@ Amen.
 
 \Normal
 
-\DropCapBlack{A}{d} te levávi óculos meos,\GreStarNbsp qui hábitas in cælis.
+\DropCapBlack{A}{d}{0}{0} te levávi óculos meos,\GreStarNbsp qui hábitas in cælis.
 
 Ecce, sicut óculi servórum \GreStar\ in mánibus dominórum suórum,
 
@@ -687,7 +687,7 @@ Quia multum repléta est ánima nostra\thinspace:\GreStarNbsp oppróbrium abund�
 
 \Normal
 
-\DropCapBlack{N}{isi} quia Dóminus erat in nobis, dicat nunc Israël\thinspace:\GreStarNbsp nisi quia Dóminus erat in nobis,
+\DropCapBlack{N}{isi}{0.1}{0} quia Dóminus erat in nobis, dicat nunc Israël\thinspace:\GreStarNbsp nisi quia Dóminus erat in nobis,
 
 Cum exsúrgerent hómines in nos,\GreStarNbsp forte vivos deglutíssent nos\thinspace:
 
@@ -712,7 +712,7 @@ Adjutórium nostrum in nómine Dómini,\GreStarNbsp qui fecit cælum et terram.
 
 \Normal
 
-\DropCapBlack{Q}{ui} confídunt in Dómino, sicut mons Sion\thinspace:\GreStarNbsp non commovébitur in ætérnum, qui hábitat in Jerúsalem.
+\DropCapBlack{Q}{ui}{0.1}{0.1} confídunt in Dómino, sicut mons Sion\thinspace:\GreStarNbsp non commovébitur in ætérnum, qui hábitat in Jerúsalem.
 
 Montes in circúitu ejus\thinspace:\GreStarNbsp et Dóminus in circúitu pópuli sui, ex hoc nunc et usque in sǽculum.
 
@@ -726,7 +726,7 @@ Declinántes autem in obligatiónes addúcet Dóminus cum operántibus iniquitá
 
 \Capitule{Ga 6, 2}
 
-\DropCapBlack{A}{lter} altérius ónera portáte \GreStar\ et sic adimplébitis legem Christi.
+\DropCapBlack{A}{lter}{0}{0} altérius ónera portáte \GreStar\ et sic adimplébitis legem Christi.
 
 \vspace{0.3cm}
 
@@ -748,7 +748,7 @@ Declinántes autem in obligatiónes addúcet Dóminus cum operántibus iniquitá
 \Hymne{}
 
 \setlength{\leftskip}{0cm}
-\DropCapRed{R}{erum}, Deus, tenax vigor,
+\DropCapRed{R}{erum}{0.1}{0}, Deus, tenax vigor,
 
 \Hymne{}
 
@@ -789,7 +789,7 @@ Amen.
 
 \Normal
 
-\DropCapBlack{I}{n converténdo} Dóminus captivitátem Sion\thinspace:\GreStarNbsp facti sumus sicut consoláti\thinspace:
+\DropCapBlack{I}{n converténdo}{0}{0} Dóminus captivitátem Sion\thinspace:\GreStarNbsp facti sumus sicut consoláti\thinspace:
 
 Tunc replétum est gáudio os nostrum\thinspace:\GreStarNbsp et lingua nostra exsultatióne.
 
@@ -810,7 +810,7 @@ Veniéntes autem vénient cum exsultatióne,\GreStarNbsp portántes manípulos s
 
 \Normal
 
-\DropCapBlack{N}{isi} Dóminus ædificáverit domum,\GreStarNbsp in vanum laboravérunt qui ædíficant eam.
+\DropCapBlack{N}{isi}{0.1}{0} Dóminus ædificáverit domum,\GreStarNbsp in vanum laboravérunt qui ædíficant eam.
 
 Nisi Dóminus custodíerit civitátem,\GreStarNbsp frustra vígilat qui custódit eam.
 
@@ -827,7 +827,7 @@ Beátus vir, qui implévit desidérium suum ex ipsis\thinspace:\GreStarNbsp non 
 
 \Normal
 
-\DropCapBlack{B}{eáti}, omnes, qui timent Dóminum,\GreStarNbsp qui ámbulant in viis ejus.
+\DropCapBlack{B}{eáti}{0}{0}, omnes, qui timent Dóminum,\GreStarNbsp qui ámbulant in viis ejus.
 
 Labóres mánuum tuárum quia manducábis\thinspace:\GreStarNbsp beátus es, et bene tibi erit.
 
@@ -845,7 +845,7 @@ Et vídeas fílios filiórum tuórum,\GreStarNbsp pacem super Israel.
 
 \Capitule{1 Co 6, 20}
 
-\DropCapBlack{E}{mpti} enim estis prétio magno\thinspace:\GreStarNbsp glorificáte et portáte Deum in córpore vestro.
+\DropCapBlack{E}{mpti}{0.1}{0} enim estis prétio magno\thinspace:\GreStarNbsp glo\-rificáte et portáte Deum in córpore vestro.
 
 \vspace{0.3cm}
 
@@ -867,7 +867,7 @@ Et vídeas fílios filiórum tuórum,\GreStarNbsp pacem super Israel.
 
 \vspace{0.5cm}
 
-\DropCapRed{A}{ cunctis} nos, quǽsumus Dómine, mentis et córporis defénde perículis~; Þ et intercedénte beáta et gloriósa semper Vírgine Dei Genitríce María, cum beáto Joseph, beátis Apóstolis Petro et Paulo, atque beáto Patre nostro Benedícto et ómnibus Sanctis, salútem nobis tríbue benígnus et pacem,\GreStarNbsp ut destrúctis adversitátibus et erróribus univérsis, Ecclésia tua secúra tibi sérviat libertáte. Per eúmdem.
+\DropCapRed{A}{ cunctis}{0}{0} nos, quǽsumus Dómine, mentis et córporis defénde perículis~; Þ et intercedénte beáta et gloriósa semper Vírgine Dei Genitríce María, cum beáto Joseph, beátis Apóstolis Petro et Paulo, atque beáto Patre nostro Benedícto et ómnibus Sanctis, salútem nobis tríbue benígnus et pacem,\GreStarNbsp ut destrúctis adversitátibus et erróribus univérsis, Ecclésia tua secúra tibi sérviat libertáte. Per eúmdem.
 
 \end{document}
 
