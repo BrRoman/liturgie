@@ -28,6 +28,7 @@
 
 % Textes en parallèle :
 %\usepackage{parallel}
+\usepackage{paracol}
 
 % Entêtes et pieds de pages :
 \usepackage{fancyhdr}
@@ -218,40 +219,32 @@
     \vspace{0.1cm}
 }
 
+\newenvironment{Date}[1]{
+    \setlength{\parindent}{0cm}
+    \setlength{\leftskip}{0cm}
+    \setlength{\parskip}{0cm}
+    \selectlanguage{latin}
+    \fontsize{9}{10}\selectfont
+    \begin{center}
+        {\color{rougeliturgique}\textsc{#1}}
+    \end{center}
+}
+
+\newenvironment{Name}[1]{
+    \setlength{\parindent}{0cm}
+    \setlength{\leftskip}{0cm}
+    \setlength{\parskip}{0cm}
+    \selectlanguage{latin}
+    \fontsize{9}{10}\selectfont
+    \begin{center}
+        #1
+    \end{center}
+}
+
 % Rubriques à l'intérieur d'un texte :
-\newcommand{\RubriqueInside}[1]{
-{\fontsize{9}{11}\selectfont\textit{\color{rougeliturgique}#1}}
-}
-
-% Partoche :
-%\newenvironment{Partoche}[1]{
-%    \fontsize{12}{12}\selectfont
-%    \selectlanguage{latin}
-%    \gregorioscore{\FolderData/#1}
-%    \selectlanguage{french}
-%    \begin{center}
-%    \fontsize{11}{12}\selectfont
-%    \parbox[t][\height][b]{9cm}{\vspace{-.2cm}\input{Partoches/#1}}\par\vspace{.1cm}
-%    \end{center}
+%\newcommand{\RubriqueInside}[1]{
+%{\fontsize{9}{11}\selectfont\textit{\color{rougeliturgique}#1}}
 %}
-
-% Latin/francais :
-%\newenvironment{LF}[2]{
-%    \setlength{\parindent}{0cm}
-%    \setlength{\leftskip}{0cm}
-%    \setlength{\parskip}{0cm}
-%    \selectlanguage{latin}
-%    \fontsize{9}{10}\selectfont#1\par
-%    \selectlanguage{french}
-%    \setlength{\leftskip}{0.3cm}
-%    \fontsize{8}{9}\selectfont\textit{#2}
-%    \vspace{0.1cm}
-%}
-\newenvironment{LF}[2]{
-    \begin{tabular}{p{5cm}p{5cm}}
-        \selectlanguage{latin}#1 & \selectlanguage{french}\small{#2} \\
-    \end{tabular}
-}
 
 % Ligne de séparation :
 \newcommand\Ligne{
@@ -261,13 +254,6 @@
 \end{center}
 }
 
-%% Citation :
-%\newenvironment{Citation}[1]{
-%    \fontsize{9}{10}\selectfont
-%    \hfill\parbox{6cm}{\begin{flushright}#1\end{flushright}}\par
-%}
-
-%
 
 %%%%%%%%%%%%%%%%%
 % Symboles spéciaux :
