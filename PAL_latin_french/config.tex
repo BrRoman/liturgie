@@ -1,15 +1,15 @@
 \documentclass[twoside]{article}
 
 % Géométrie de la page :
-\usepackage{geometry}
-\geometry{paperwidth=14.85cm, paperheight=21cm, inner=1cm, outer=1.2cm, tmargin=1cm, bmargin=1.2cm, includehead}
+\usepackage[twoside]{geometry}
+\geometry{paperwidth=14.85cm, paperheight=21cm, inner=0.7cm, outer=1.2cm, tmargin=1cm, bmargin=1.3cm, includehead}
 
 % Choix d'une police principale :
 \usepackage{luatextra}
 \setmainfont{Arno Pro}
 
 % Redéfinition de la taille des polices :
-%\renewcommand{\small}{\fontsize{8}{10}\selectfont}
+%\renewcommand{\small}{\fontsize{11}{12}\selectfont}
 
 % Césures etc. :
 \usepackage[latin, french]{babel}
@@ -34,9 +34,9 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhead{}
-\fancyhead[CE]{\fontsize{8}{10}\selectfont\textsc{Benedictiones}}
-\fancyhead[CO]{\fontsize{8}{10}\selectfont\textsc{\rightmark}}
-\fancyfoot[CE,CO]{\fontsize{8}{10}\selectfont\thepage}
+\fancyhead[CE]{\fontsize{11}{12}\selectfont\textsc{Missel romain 1962 - Supplément}}
+\fancyhead[CO]{\fontsize{11}{12}\selectfont\textsc{\rightmark}}
+\fancyfoot[CE,CO]{\fontsize{11}{12}\selectfont\thepage}
 \renewcommand{\sectionmark}[1]{\markright{#1}}
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -47,7 +47,7 @@
 % Redéfinition du style {plain} (seulement pied de page) :
 \fancypagestyle{plain}{
 \fancyhf{}% Clear all.
-\fancyfoot[CE,CO]{\fontsize{8}{10}\selectfont\thepage}
+\fancyfoot[CE,CO]{\fontsize{11}{12}\selectfont\thepage}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\headrule}{}
 \setlength{\headsep}{0cm}
@@ -55,8 +55,8 @@
 % Redéfintion du style {headings} (seulement entête) :
 \fancypagestyle{headings}{
 \fancyhf{}% Clear all.
-\fancyhead[CE]{\fontsize{8}{10}\selectfont\textsc{Benedictiones}}
-\fancyhead[CO]{\fontsize{8}{10}\selectfont\textsc{\rightmark}}
+\fancyhead[CE]{\fontsize{11}{12}\selectfont\textsc{Benedictiones}}
+\fancyhead[CO]{\fontsize{11}{12}\selectfont\textsc{\rightmark}}
 \setlength{\footskip}{0cm}
 }
 
@@ -205,19 +205,19 @@
     \setlength{\leftskip}{0cm}
     \setlength{\parskip}{0cm}
     \selectlanguage{latin}
-    \fontsize{9}{10}\selectfont#1\par
+    \fontsize{12}{13}\selectfont#1\par
     \vspace{0.1cm}
 }
 
 % Style de paragraphe Rubrique :
-\newenvironment{Rubrique}[1]{
-    \setlength{\parindent}{0cm}
-    \setlength{\leftskip}{0cm}
-    \setlength{\parskip}{0cm}
-    \fontsize{9}{11}\selectfont
-    {\color{rougeliturgique}\textit{#1}}
-    \vspace{0.1cm}
-}
+%\newenvironment{Rubrique}[1]{
+%    \setlength{\parindent}{0cm}
+%    \setlength{\leftskip}{0cm}
+%    \setlength{\parskip}{0cm}
+%    \fontsize{9}{11}\selectfont
+%    {\color{rougeliturgique}\textit{#1}}
+%    \vspace{0.1cm}
+%}
 
 \newenvironment{Date}[1]{
     \setlength{\parindent}{0cm}
@@ -235,7 +235,7 @@
     \setlength{\leftskip}{0cm}
     \setlength{\parskip}{0cm}
     \selectlanguage{latin}
-    \fontsize{9}{10}\selectfont
+    \fontsize{12}{13}\selectfont
     \begin{center}
         #1
     \end{center}
