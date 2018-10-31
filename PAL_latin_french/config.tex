@@ -82,6 +82,8 @@
 \renewcommand{\cftsecaftersnum}{\end{lrbox}}
 \makeatother
 
+% Lettrines :
+\usepackage{lettrine}
 
 % Various (fonts) :
 \usepackage{fontspec}
@@ -224,10 +226,11 @@
     \setlength{\leftskip}{0cm}
     \setlength{\parskip}{0cm}
     \selectlanguage{latin}
-    \fontsize{9}{10}\selectfont
+    \fontsize{11}{12}\selectfont
     \begin{center}
-        {\color{rougeliturgique}\textsc{#1}}
+        \textsc{#1}
     \end{center}
+    \vspace{-.5cm}
 }
 
 \newenvironment{Name}[1]{
@@ -237,14 +240,64 @@
     \selectlanguage{latin}
     \fontsize{12}{13}\selectfont
     \begin{center}
-        #1
+        \MakeUppercase{#1}
     \end{center}
+    \vspace{-.5cm}
 }
 
-% Rubriques à l'intérieur d'un texte :
-%\newcommand{\RubriqueInside}[1]{
-%{\fontsize{9}{11}\selectfont\textit{\color{rougeliturgique}#1}}
-%}
+\newenvironment{Rang}[1]{
+    \setlength{\parindent}{0cm}
+    \setlength{\leftskip}{0cm}
+    \setlength{\parskip}{0cm}
+    \selectlanguage{latin}
+    \fontsize{12}{13}\selectfont
+    \begin{center}
+        {\color{rougeliturgique}\textsc{#1}}
+    \end{center}
+    \vspace{-.7cm}
+}
+
+\newenvironment{Latin}[1]{
+    \setlength{\parindent}{0cm}
+    \setlength{\leftskip}{0cm}
+    \setlength{\parskip}{0cm}
+    \selectlanguage{latin}
+    \fontsize{12}{13}\selectfont
+    #1
+}
+
+\newenvironment{French}[1]{
+    \setlength{\parindent}{0cm}
+    \setlength{\leftskip}{0cm}
+    \setlength{\parskip}{0cm}
+    \selectlanguage{french}
+    \fontsize{11}{12}\selectfont
+    #1
+}
+
+% Chapeau :
+\newcommand{\Hat}[1]{
+    \begin{center}
+        {\fontsize{11}{12}\selectfont\color{rougeliturgique}#1}
+    \end{center}
+    \vspace{-.3cm}
+}
+
+% Références :
+\newcommand{\Ref}[1]{
+    {\fontsize{11}{12}\selectfont\textit{\color{rougeliturgique}#1}}
+}
+
+% Chapeau avec référence :
+\newcommand{\HatWithRef}[2]{
+    {\fontsize{11}{12}\selectfont\color{rougeliturgique}#1}\hfill\Ref{#2}
+}
+
+% Lettrines rouges [Lettrine, reste du mot, coeff. de dilatation au-dessus de la 1ère ligne, coeff. d'élévation au-dessus de la 1ère ligne] :
+\newcommand\DropCapRed[4]{\vspace{-\baselineskip}\lettrine[realheight, nindent=0.5em, slope=-.5em, loversize=#3, lraise=#4]{{\color{rougeliturgique}#1}}{#2}}
+
+% Lettrines noires [Lettrine, reste du mot, coeff. de dilatation au-dessus de la 1ère ligne, coeff. d'élévation au-dessus de la 1ère ligne] :
+\newcommand\DropCapBlack[4]{\vspace{-\baselineskip}\lettrine[realheight, nindent=0.5em, slope=-.5em, loversize=#3, lraise=#4]{#1}{#2}}
 
 % Ligne de séparation :
 \newcommand\Ligne{
