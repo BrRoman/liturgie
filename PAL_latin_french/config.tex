@@ -62,7 +62,7 @@
 
 % Pour forcer l'usage des césures (cf. mail Thierry Masson) :
 \pretolerance = -1
-\tolerance = 2000
+\tolerance = 7000
 
 % Pour augmenter l'approche des caractères :
 \usepackage{soul}
@@ -122,12 +122,12 @@
 \defõ{\accentaigu{œ}}
 \catcode`\Ï=\active% Alt-j
 \defÏ{\accentaigu{y}}
-\catcode`\™=\active% Alt-Maj-t
+\catcode`\™=\active% Alt-Maj-8
 \def™{\textit{\color{rougeliturgique}T.P.}}
-\catcode`\∏=\active% Alt-Maj-p
-\def∏{\textit{\color{rougeliturgique}Ps.}}
-\catcode`\ı=\active% Alt-Maj-n
-\defı{\textup{\color{rougeliturgique}N.}}
+\catcode`\Ø=\active% Alt-Maj-$ (dollar)
+\defØ{\textit{\color{rougeliturgique}Ps.}}
+%\catcode`\™=\active% Alt-Maj-t
+%\defı{\textup{\color{rougeliturgique}N.}}
 \catcode`\€\active% Alt-* (sinon les * des \vspace* sont actives)
 \def€{\GreStar}
 \def\GreStar{
@@ -146,6 +146,29 @@
 %\grechangedim{bar@maior@standalone@notext}{0.3 cm}{scalable}
 %\grechangedim{spacebeforeeolcustos}{0.3 cm}{scalable}
 %\grechangedim{baselineskip}{40pt plus 5 pt minus 5 pt}{scalable}
+
+
+%%%%%%%%%%%%%%%%%
+% Symboles spéciaux :
+%%%%%%%%%%%%%%%%%
+
+% Antienne :
+%\catcode`\ø=\active
+%\defø{{\fontspec{FlavGaramond} \symbol{8721}}}
+% Verset :
+\catcode`\ß=\active
+\defß{{\fontspec{FlavGaramond} \symbol{8730}}}
+% Croix de Malte:
+\catcode`\+=\active
+\def+{{\color{rougeliturgique}{\fontspec{Menlo}{\fontsize{18}{24}\selectfont \symbol{10016}}}}}
+
+
+%%%%%%%%%%%%%%%%%
+% Hyphenations :
+%%%%%%%%%%%%%%%%%
+
+\hyphenation{al-le-lu-ia}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Commandes et environnements :
@@ -207,7 +230,7 @@
     \setlength{\leftskip}{0cm}
     \setlength{\parskip}{0cm}
     \selectlanguage{latin}
-    \fontsize{12}{13}\selectfont#1\par
+    \fontsize{14}{16}\selectfont#1\par
     \vspace{0.1cm}
 }
 
@@ -226,7 +249,7 @@
     \setlength{\leftskip}{0cm}
     \setlength{\parskip}{0cm}
     \selectlanguage{latin}
-    \fontsize{11}{12}\selectfont
+    \fontsize{14}{16}\selectfont
     \begin{center}
         \textsc{#1}
     \end{center}
@@ -238,7 +261,7 @@
     \setlength{\leftskip}{0cm}
     \setlength{\parskip}{0cm}
     \selectlanguage{latin}
-    \fontsize{12}{13}\selectfont
+    \fontsize{16}{18}\selectfont
     \begin{center}
         \MakeUppercase{#1}
     \end{center}
@@ -250,7 +273,7 @@
     \setlength{\leftskip}{0cm}
     \setlength{\parskip}{0cm}
     \selectlanguage{latin}
-    \fontsize{12}{13}\selectfont
+    \fontsize{14}{16}\selectfont
     \begin{center}
         {\color{rougeliturgique}\textsc{#1}}
     \end{center}
@@ -262,7 +285,7 @@
     \setlength{\leftskip}{0cm}
     \setlength{\parskip}{0cm}
     \selectlanguage{latin}
-    \fontsize{12}{13}\selectfont
+    \fontsize{13}{14}\selectfont
     #1
 }
 
@@ -271,26 +294,41 @@
     \setlength{\leftskip}{0cm}
     \setlength{\parskip}{0cm}
     \selectlanguage{french}
-    \fontsize{11}{12}\selectfont
+    \fontsize{12}{14}\selectfont
     #1
 }
 
 % Chapeau :
 \newcommand{\Hat}[1]{
     \begin{center}
-        {\fontsize{11}{12}\selectfont\color{rougeliturgique}#1}
+        {\fontsize{12}{14}\selectfont\color{rougeliturgique}#1}
     \end{center}
     \vspace{-.3cm}
 }
 
 % Références :
 \newcommand{\Ref}[1]{
-    {\fontsize{11}{12}\selectfont\textit{\color{rougeliturgique}#1}}
+    {\fontsize{12}{14}\selectfont\textit{\color{rougeliturgique}#1}}
 }
 
-% Chapeau avec référence :
-\newcommand{\HatWithRef}[2]{
-    {\fontsize{11}{12}\selectfont\color{rougeliturgique}#1}\hfill\Ref{#2}
+% Chapeau rouge avec référence :
+\newcommand{\HatWithRefRed}[2]{
+    \vspace{.3cm}
+    {\fontsize{12}{14}\selectfont\color{rougeliturgique}#1}\hfill\Ref{#2}
+}
+
+% Chapeau noir avec référence latin :
+\newcommand{\HatWithRefBlackLatin}[2]{
+    \vspace{.3cm}
+    {\fontsize{13}{14}\selectfont#1}\par\hfill\Ref{#2}
+    \vspace{.5cm}
+}
+
+% Chapeau noir avec référence français :
+\newcommand{\HatWithRefBlackFrench}[2]{
+    \vspace{.3cm}
+    {\fontsize{12}{14}\selectfont#1}\par\hfill\Ref{#2}
+    \vspace{.5cm}
 }
 
 % Lettrines rouges [Lettrine, reste du mot, coeff. de dilatation au-dessus de la 1ère ligne, coeff. d'élévation au-dessus de la 1ère ligne] :
@@ -299,6 +337,15 @@
 % Lettrines noires [Lettrine, reste du mot, coeff. de dilatation au-dessus de la 1ère ligne, coeff. d'élévation au-dessus de la 1ère ligne] :
 \newcommand\DropCapBlack[4]{\vspace{-\baselineskip}\lettrine[realheight, nindent=0.5em, slope=-.5em, loversize=#3, lraise=#4]{#1}{#2}}
 
+% Textes en rouge :
+\newcommand\Red[1]{{\color{rougeliturgique}#1}}
+
+% Chapeau Évangile latin (Évangéliste, référence) :
+\newcommand\EvgLatin[2]{\HatWithRefBlackLatin{+\hspace{0.3cm}\Red{S}equéntia sancti Evangélii secúndum #1.}{#2}}
+
+% Chapeau Évangile français (Évangéliste, référence) :
+\newcommand\EvgFrench[2]{\HatWithRefBlackFrench{\Red{L}ecture du saint Évangile selon saint #1.}{#2}}
+
 % Ligne de séparation :
 \newcommand\Ligne{
 \vspace{0.2cm}
@@ -306,28 +353,4 @@
 \greseparator{2}{10}
 \end{center}
 }
-
-
-%%%%%%%%%%%%%%%%%
-% Symboles spéciaux :
-%%%%%%%%%%%%%%%%%
-
-% Antienne :
-%\catcode`\ø=\active
-%\defø{{\fontspec{FlavGaramond} \symbol{8721}}}
-% Verset :
-\catcode`\ß=\active
-\defß{{\fontspec{FlavGaramond} \symbol{8730}}}
-% Croix de Malte:
-\catcode`\+=\active
-\def+{{\fontspec{Menlo} \symbol{10016}}}
-
-%
-
-%%%%%%%%%%%%%%%%%
-% Hyphenations :
-%%%%%%%%%%%%%%%%%
-
-\hyphenation{al-le-lu-ia}
-
 
