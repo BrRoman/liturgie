@@ -308,7 +308,7 @@
 
 % Références :
 \newcommand{\Ref}[1]{
-    {\fontsize{12}{14}\selectfont\textit{\color{rougeliturgique}#1}}
+    {\fontsize{12}{14}\selectfont\textit{\color{rougeliturgique}\oldstylenums{#1}}}
 }
 
 % Chapeau rouge avec référence :
@@ -338,7 +338,7 @@
 \newcommand\DropCapBlack[4]{\vspace{-\baselineskip}\lettrine[realheight, nindent=0.5em, slope=-.5em, loversize=#3, lraise=#4]{#1}{#2}}
 
 % Textes en rouge :
-\newcommand\Red[1]{{\color{rougeliturgique}#1}}
+\newcommand\Red[1]{{\color{rougeliturgique}\oldstylenums{#1}}}
 
 % Chapeau Évangile latin (Évangéliste, référence) :
 \newcommand\EvgLatin[2]{\HatWithRefBlackLatin{+\hspace{0.3cm}\Red{S}equéntia sancti Evangélii secúndum #1.}{#2}}
