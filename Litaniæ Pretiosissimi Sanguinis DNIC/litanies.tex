@@ -1,0 +1,173 @@
+\documentclass[twoside]{article}
+% Géométrie de la page :
+\usepackage{geometry}
+\geometry{paperwidth=14.85cm, paperheight=21cm, inner=2cm, outer=2cm, tmargin=0cm, bmargin=1cm, includehead}
+% Choix d'une police principale :
+\usepackage{luatextra}
+\setmainfont{Arno Pro}
+% Césures etc. :
+\usepackage[frenchb]{babel}
+% Pour forcer l'usage des césures (cf. mail Thierry Masson) :
+\pretolerance = -1
+\tolerance = 2000
+% Pour augmenter l'approche des caractères :
+\usepackage{soul}
+% Gregorio :
+\usepackage[autocompile]{gregoriotex}
+\grechangedim{spaceabovelines}{.7cm}{fixed}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configuration P. Vianney :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fontspec}
+\usepackage{calc}
+\usepackage{pifont}
+\frenchbsetup{ThinColonSpace=true}
+%\setmainfont[ItalicFont = ArnoPro-Italic]{ArnoPro-Caption}
+\newfontfamily{\GregPlantin}[BoldFont = GregPlantin Bold,ItalicFont = GregPlantin Italic,BoldItalicFont = GregPlantin Bolditalic]{GregPlantin Regular}
+\newfontfamily{\PlantinStd}{Plantin Std}
+\newfontfamily{\GaramondPremierPro}[Numbers=OldStyle]{Garamond Premier Pro}
+\newfontfamily{\GaramondPremierProCaption}[Numbers=OldStyle]{GaramondPremrPro-Capt}
+\newfontfamily{\GaramondPremierProMediumCaption}[Numbers=OldStyle]{GaramondPremrPro-MedCapt}
+\newfontfamily{\GaramondPremierProItCaption}[Numbers=OldStyle]{GaramondPremrPro-ItCapt}
+\newfontfamily{\GaramondPremierProIt}{GaramondPremrPro-It}
+\newfontfamily{\GaramondPremierProMediumIt}{GaramondPremrPro-MedIt}
+\newfontfamily{\FlavGaramond}{FlavGaramond}
+\definecolor{rougeliturgique}{cmyk}{0.15,1,1,0}
+\renewcommand{\Rbar}{\textbf{\color{rougeliturgique}\GregPlantin\symbol{164}}}
+\renewcommand{\Vbar}{\textbf{\color{rougeliturgique}\GregPlantin\symbol{8730}}}
+\renewcommand{\GreDagger}{\textrm{\color{rougeliturgique}\FlavGaramond \symbol{8224}}}
+\catcode`\®=\active
+\def®{\Rbar}
+\catcode`\√=\active
+\def√{\Vbar}
+\catcode`\©=\active
+\def©{\hspace{-1.2ex}}
+\catcode`\ŧ=\active
+\defŧ{\GreDagger}
+\makeatletter
+\def\accentaigucaractere{\makebox[0pt][c]{´}}
+\newcommand\accentaigu[1]{\setlength{\@tempdima}{\widthof{#1}}\hbox{#1\kern-0.5\@tempdima\accentaigucaractere\kern0.5\@tempdima}}
+\makeatother
+%\def\espacefine{\hspace{0.035cm}}
+\catcode`\à=\active
+\defà{\accentaigu{æ}}
+\catcode`\ò=\active
+\defò{\accentaigu{œ}}
+\catcode`\ù=\active
+\defù{\accentaigu{y}}
+\catcode`\™=\active
+\def™{\textit{\color{rougeliturgique}T.P.}}
+\def\GreStar{
+{\color{rougeliturgique}\tiny\raisebox{1.5ex}{\ding{72}}}
+\relax
+}
+\grechangestyle{initial}{\fontsize{36}{50}\color{rougeliturgique}\PlantinStd }
+%\hoffset-1in
+%\voffset-1in
+\newbox\scorebox
+\gresetheadercapture{commentary}{grecommentary}{string}
+%\grechangestyle{commentary}{\color{rougeliturgique}\scriptsize\itshape}
+\grechangestaffsize{16}
+\grechangedim{afterinitialshift}{2.2mm}{fixed}
+\grechangedim{beforeinitialshift}{3mm}{fixed}
+\let\grevanillacommentary\grecommentary
+\def\grecommentary#1{\grevanillacommentary{#1\kern 0.3mm}}
+\gresetbarspacing{new}
+\grechangedim{bar@maior@standalone@notext}{0.3 cm}{scalable}
+\grechangedim{spacebeforeeolcustos}{0.3 cm}{scalable}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fin P. Vianney.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commandes et environnements :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Espace fine :
+\DeclareRobustCommand{\mynobreakthinspace}{%
+\leavevmode\nobreak\hspace{0.09em}}
+\def~{\mynobreakthinspace{}}
+% Style pour les références des partitions :
+\grechangestyle{commentary}{\color{rougeliturgique}\itshape\fontsize{9}{8}\selectfont}
+%
+%%%%%%%%%%%%%%%%%
+% Symboles spéciaux :
+%%%%%%%%%%%%%%%%%
+% Antienne :
+\catcode`\ø=\active
+\defø{{\fontspec{FlavGaramond} \symbol{8721}}}
+% Répons :
+\catcode`\¶=\active
+\def¶{{\fontspec{FlavGaramond} \symbol{164}}}
+% Verset :
+\catcode`\ß=\active
+\defß{{\fontspec{FlavGaramond} \symbol{8730}}}
+% Croix haute :
+\catcode`\†=\active
+\def†{{\fontspec{Menlo} \symbol{8224}}}
+% Croix de Malte:
+\catcode`\+=\active
+\def+{{\fontspec{Menlo} \symbol{10016}}}
+%
+%%%%%%%%%%%%%%%%%
+% Hyphenations :
+%%%%%%%%%%%%%%%%%
+\hyphenation{al-le-lu-ia}
+%
+
+\begin{document}
+\pagestyle{empty}
+\begin{center}
+    \fontsize{14}{14}\selectfont
+    \textsc{Litaniæ}\par
+    \vspace{.2cm}
+    \fontsize{18}{18}\selectfont
+    \textsc{Pretiosissimi Sanguinis D.N.I.C.}
+\end{center}
+\vspace{.3cm}
+\fontsize{12.5}{15}\selectfont
+
+% Kyrie
+\gregorioscore{scores/kyrie}
+\vspace{0.1cm}
+\textit{Fili}, Redémptor mundi, \textbf{De}us, miserére nobis.\par
+\textit{Spíri}tus Sancte, \textbf{De}us, miserére nobis.\par
+\textit{Sancta} Trínitas, unus \textbf{De}us, miserére nobis.\par
+
+% Sanguis
+\gregorioscore{scores/sanguis}
+\vspace{0.1cm}
+Sanguis Christi, Verbi Dei in\textit{car}\textbf{ná}ti,\par
+Sanguis Christi, Novi et Ætérni Tes\textit{ta}\textbf{mén}ti,\par
+Sanguis Christi, in agónia decúrrens \textit{in} \textbf{ter}ram,\par
+Sanguis Christi, in flagellatióne \textit{pró}\textbf{flu}ens,\par
+Sanguis Christi, in coronatióne spinárum \textit{e}\textbf{má}nans,\par
+Sanguis Christi, in Cruce \textit{ef}\textbf{fú}sus,\par
+Sanguis Christi, prétium nostræ \textit{sa}\textbf{lú}tis,\par
+Sanguis Christi, sine quo non fit re\textit{mís}\textbf{si}o,\par
+Sanguis Christi, in Eucharístia potus et lavácrum a\textit{ni}\textbf{má}rum,\par
+Sanguis Christi, flumen miseri\textit{cór}\textbf{di}æ,\par
+Sanguis Christi, victor \textit{dǽ}\textbf{mo}num,\par
+Sanguis Christi, fortitúdo \textit{már}\textbf{ty}rum,\par
+Sanguis Christi, virtus con\textit{fes}\textbf{só}rum,\par
+Sanguis Christi, gérminans \textit{vír}\textbf{gi}nes,\par
+Sanguis Christi, robur pericli\textit{tán}\textbf{ti}um,\par
+Sanguis Christi, levámen labo\textit{rán}\textbf{ti}um,\par
+Sanguis Christi, in fletu so\textit{lá}\textbf{ti}um,\par
+Sanguis Christi, spes pæni\textit{tén}\textbf{ti}um,\par
+Sanguis Christi, solámen mori\textit{én}\textbf{ti}um,\par
+Sanguis Christi, pax et dulcédo \textit{cór}\textbf{di}um,\par
+Sanguis Christi, pignus vitæ \textit{æ}\textbf{tér}næ,\par
+Sanguis Christi, ánimas líberans de lacu Purga\textit{tó}\textbf{ri}i,\par
+Sanguis Christi, omni glória et honóre di\textit{gnís}\textbf{si}mus,\par
+
+% Agnus
+\gregorioscore{scores/agnus}
+\vspace{0.1cm}
+
+% Conclusion
+® Redemísti nos, Dómine, in sánguine tuo.\par
+√ Et fecísti nos Deo nostro regnum.\par
+Orémus. Omnípotens sempitérne Deus, qui unigénitum Fílium tuum mundi Redemptórem constituísti, ac eius sánguine placári voluísti: concéde, quǽsumus, salútis nostræ prétium ita venerári, atque a præséntis vitæ malis eius virtúte deféndi in terris, ut fructu perpétuo lætémur in cælis. Per eúndem Christum Dóminum nostrum. Amen.
+
+\end{document}
