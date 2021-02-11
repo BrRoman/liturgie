@@ -1,0 +1,142 @@
+\documentclass[twoside]{article}
+% Géométrie de la page :
+\usepackage{geometry}
+\geometry{paperwidth=14.85cm, paperheight=21cm, inner=2cm, outer=2cm, tmargin=0cm, bmargin=1cm, includehead, includefoot}
+% Choix d'une police principale :
+\usepackage{luatextra}
+\setmainfont{Arno Pro}
+% Césures etc. :
+\usepackage[latin, french]{babel}
+% Pour forcer l'usage des césures (cf. mail Thierry Masson) :
+\pretolerance = -1
+\tolerance = 2000
+% Pour augmenter l'approche des caractères :
+\usepackage{soul}
+% Lettrines :
+\usepackage{lettrine}
+% Lettrines rouges [Lettrine, reste du mot, coeff. de dilatation au-dessus de la 1ère ligne, coeff. d'élévation au-dessus de la 1ère ligne] :
+\newcommand\DropCapRed[4]{\vspace{-\baselineskip}\lettrine[realheight, nindent=0.5em, slope=-.5em, loversize=#3, lraise=#4]{{\color{rougeliturgique}#1}}{#2}}
+% Gregorio :
+\usepackage[autocompile]{gregoriotex}
+\grechangedim{spaceabovelines}{0.5cm}{fixed}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configuration P. Vianney :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fontspec}
+\usepackage{calc}
+\usepackage{pifont}
+\frenchbsetup{ThinColonSpace=true}
+%\setmainfont[ItalicFont = ArnoPro-Italic]{ArnoPro-Caption}
+\newfontfamily{\GregPlantin}[BoldFont = GregPlantin Bold,ItalicFont = GregPlantin Italic,BoldItalicFont = GregPlantin Bolditalic]{GregPlantin Regular}
+\newfontfamily{\PlantinStd}{Plantin Std}
+\newfontfamily{\GaramondPremierPro}[Numbers=OldStyle]{Garamond Premier Pro}
+\newfontfamily{\GaramondPremierProCaption}[Numbers=OldStyle]{GaramondPremrPro-Capt}
+\newfontfamily{\GaramondPremierProMediumCaption}[Numbers=OldStyle]{GaramondPremrPro-MedCapt}
+\newfontfamily{\GaramondPremierProItCaption}[Numbers=OldStyle]{GaramondPremrPro-ItCapt}
+\newfontfamily{\GaramondPremierProIt}{GaramondPremrPro-It}
+\newfontfamily{\GaramondPremierProMediumIt}{GaramondPremrPro-MedIt}
+\newfontfamily{\FlavGaramond}{FlavGaramond}
+\definecolor{rougeliturgique}{cmyk}{0.15,1,1,0}
+\definecolor{gregoriocolor}{cmyk}{0.15,1,1,0}
+\renewcommand{\Rbar}{\textbf{\color{rougeliturgique}\GregPlantin\symbol{164}}}
+\renewcommand{\Vbar}{\textbf{\color{rougeliturgique}\GregPlantin\symbol{8730}}}
+\renewcommand{\GreDagger}{\textrm{\color{rougeliturgique}\FlavGaramond \symbol{8224}}}
+\catcode`\®=\active
+\def®{\Rbar}
+\catcode`\√=\active
+\def√{\Vbar}
+\catcode`\©=\active
+\def©{\hspace{-1.2ex}}
+\catcode`\ŧ=\active
+\defŧ{\GreDagger}
+\makeatletter
+\def\accentaigucaractere{\makebox[0pt][c]{´}}
+\newcommand\accentaigu[1]{\setlength{\@tempdima}{\widthof{#1}}\hbox{#1\kern-0.5\@tempdima\accentaigucaractere\kern0.5\@tempdima}}
+\makeatother
+%\def\espacefine{\hspace{0.035cm}}
+\catcode`\à=\active
+\defà{\accentaigu{æ}}
+\catcode`\ò=\active
+\defò{\accentaigu{œ}}
+\catcode`\ù=\active
+\defù{\accentaigu{y}}
+\catcode`\™=\active
+\def™{\textit{\color{rougeliturgique}T.P.}}
+\def\GreStar{
+{\color{rougeliturgique}\tiny\raisebox{1.5ex}{\ding{72}}}
+\relax
+}
+\grechangestyle{initial}{\fontsize{36}{50}\color{rougeliturgique}\PlantinStd }
+%\hoffset-1in
+%\voffset-1in
+\newbox\scorebox
+\gresetheadercapture{commentary}{grecommentary}{string}
+%\grechangestyle{commentary}{\color{rougeliturgique}\scriptsize\itshape}
+\grechangestaffsize{16}
+\grechangedim{afterinitialshift}{2.2mm}{fixed}
+\grechangedim{beforeinitialshift}{3mm}{fixed}
+\let\grevanillacommentary\grecommentary
+\def\grecommentary#1{\grevanillacommentary{#1\kern 0.3mm}}
+\gresetbarspacing{new}
+\grechangedim{bar@maior@standalone@notext}{0.3 cm}{scalable}
+\grechangedim{spacebeforeeolcustos}{0.3 cm}{scalable}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fin P. Vianney.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commandes et environnements :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Espace fine :
+\DeclareRobustCommand{\mynobreakthinspace}{%
+\leavevmode\nobreak\hspace{0.09em}}
+\def~{\mynobreakthinspace{}}
+% Style pour les références des partitions :
+\grechangestyle{commentary}{\color{rougeliturgique}\itshape\fontsize{9}{8}\selectfont}
+%
+%%%%%%%%%%%%%%%%%
+% Symboles spéciaux :
+%%%%%%%%%%%%%%%%%
+% Antienne :
+\catcode`\ø=\active
+\defø{{\fontspec{FlavGaramond} \symbol{8721}}}
+% Répons :
+\catcode`\¶=\active
+\def¶{{\fontspec{FlavGaramond} \symbol{164}}}
+% Verset :
+\catcode`\ß=\active
+\defß{{\fontspec{FlavGaramond} \symbol{8730}}}
+% Croix haute :
+\catcode`\†=\active
+\def†{{\fontspec{Menlo} \symbol{8224}}}
+% Croix de Malte:
+\catcode`\+=\active
+\def+{{\fontspec{Menlo} \symbol{10016}}}
+%
+%%%%%%%%%%%%%%%%%
+% Hyphenations :
+%%%%%%%%%%%%%%%%%
+\hyphenation{al-le-lu-ia}
+%
+
+\begin{document}
+\pagestyle{empty}
+\fontsize{14}{18}\selectfont
+\selectlanguage{latin}
+
+% Score
+\gregorioscore{stella_coeli}
+
+% Conclusion
+\newpage
+√ Ora pro nobis, piíssima Dei Génitrix.\par
+® Quæ contrivísti caput serpéntis, auxiliáre nobis.\par
+
+\vspace{0.2cm}
+\textbf{Orémus.}
+\vspace{0.5cm}
+\DropCapRed{D}{eus}{0}{0} misericórdiæ, Deus pietátis, Deus indulgéntiæ, qui misértus es super afflictiónem pópuli tui, et dixísti Angelo percutiénti pópulum tuum~: Cóntine manum tuam, ob amórem illíus Stellæ gloriósæ, cujus úbera pretiósa contra venénum nostrórum delictórum dúlciter suxísti~; præsta auxílium grátiæ tuæ, ut intercedénte beáta Vírgine María Matre tua et beáto Bartholomǽo Apóstolo tuo dilécto, ab omni peste et improvísa morte secúre liberémur, et a totíus perditiónis incúrsu misericórditer salvémur. Per te Jesu Christe, Rex glóriæ, qui cum Patre et Spíritu Sancto vivis et regnas, Deus in sǽcula sæculórum.\par
+® Amen.
+
+\end{document}
