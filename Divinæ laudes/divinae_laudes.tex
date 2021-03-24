@@ -1,7 +1,7 @@
 \documentclass[twoside]{article}
 % Géométrie de la page :
 \usepackage{geometry}
-\geometry{paperwidth=14.85cm, paperheight=21cm, inner=1.8cm, outer=1.8cm, tmargin=1.5cm, bmargin=1.5cm}
+\geometry{paperwidth=14.85cm, paperheight=21cm, inner=1.3cm, outer=1.3cm, tmargin=1cm, bmargin=1.5cm}
 % Choix d'une police principale :
 \usepackage{luatextra}
 \setmainfont{Arno Pro}
@@ -11,7 +11,7 @@
 \pretolerance = -1
 \tolerance = 2000
 % Pour augmenter l'approche des caractères :
-\usepackage{soul}
+\usepackage{microtype}
 % Lettrines :
 \usepackage{lettrine}
 % Lettrines rouges [Lettrine, reste du mot, coeff. de dilatation au-dessus de la 1ère ligne, coeff. d'élévation au-dessus de la 1ère ligne] :
@@ -125,17 +125,17 @@
 
 \begin{center}
     \fontsize{18}{18}\selectfont
-    \makebox[7cm][s]{\textsc{D i v i n æ\hspace{1cm}L a u d e s}}
+    \makebox[7cm][c]{\textsc{\textls[100]{Divinæ\hspace{0.3cm}Laudes}}}
 \end{center}
 
-\fontsize{12}{15}\selectfont
+\fontsize{12.5}{15}\selectfont
 \selectlanguage{latin}
 
 % Score
 \gregorioscore{score}
 
 \begin{tabbing}
-    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\= \kill
+    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\= \kill
     2. Benedíctus \textit{Iesus} \textbf{Chri}stus,\> Verus Deus et \textit{verus} \textbf{ho}mo.\\
     3. Benedíctum \textit{nomen} \textbf{Ie}su,\> Benedíctum Cor eius \textit{sacra}\textbf{tís}simum.\\
     4. Bene\textit{díctus} \textbf{e}ius\> Sanguis pre\textit{tio}\textbf{sís}simus.\\
